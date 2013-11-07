@@ -77,7 +77,7 @@ module Transition
                                     else
                                       Organisation.find_by_abbr(inferred_organisation)
                                     end
-          site.tna_timestamp      = yaml['tna_timestamp']
+          site.tna_timestamp      = DateTime.strptime(yaml['tna_timestamp'].to_s, '%Y%m%d%H%M%S') #20120816224015
           site.query_params       = yaml['options'] ? yaml['options'].sub(/^.*--query-string /, '') : ''
           site.global_http_status = global_http_status
           site.global_new_url     = global_new_url
