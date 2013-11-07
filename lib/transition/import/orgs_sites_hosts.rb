@@ -27,14 +27,18 @@ module Transition
         # Two passes, one to set up organisations
         # and one to set up their parents.
         Organisation.transaction do
-          organisations.values.each do |site|
-            create_org_from(site)
-          end
-          organisations.values.select { |s| s.child? }.each do |site|
-            Organisation.find_by_abbr!(site.inferred_organisation).tap do |org|
-              org.parent = Organisation.find_by_abbr!(site.inferred_parent)
-              org.save!
+          begin
+            organisations.values.each do |site|
+              create_org_from(site)
             end
+            organisations.values.select { |s| s.child? }.each do |site|
+              Organisation.find_by_abbr!(site.inferred_organisation).tap do |org|
+                org.parent = Organisation.find_by_abbr!(site.inferred_parent)
+                org.save!
+              end
+            end
+          rescue PG::InFailedSqlTransaction => e
+            e.transaction.rollback
           end
         end
       end
