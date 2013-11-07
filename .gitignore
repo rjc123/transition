@@ -17,9 +17,9 @@
 /log/*.log
 /tmp
 
-# Ignore schema.rb (since we're using structure.sql instead)
-# in case anyone runs db:schema:dump and checks in the result
-/db/schema.rb
+# Ignore structure.sql (since we're using schema.db now instead)
+# in case anyone checks in theirs by accident
+/db/structure.sql
 
 # Ignore secret things
 /config/ga_*

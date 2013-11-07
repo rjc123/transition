@@ -3,7 +3,7 @@ source 'https://BnrJb6FZyzspBboNJzYZ@gem.fury.io/govuk/'
 
 gem 'rails', '3.2.13'
 gem 'unicorn', '4.6.2'
-gem 'mysql2', '0.3.13'
+gem 'pg', '0.17.0'
 gem 'jquery-rails', '3.0.4'
 gem 'optic14n', '1.0.0'     # Ideally version should be synced with bouncer
 gem 'gds-sso', '6.0.0'

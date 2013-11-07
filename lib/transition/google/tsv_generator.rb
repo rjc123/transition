@@ -11,7 +11,7 @@ module Transition
     # of +[<hostname>, <path>, <count>]+ arrays and a +stdfile+ to send them to,
     # +generate!+ a tab-separated list of pseudo-+Hit+s
     #
-    # This exists so we can reuse the TSV-based fast mySQL import of Hits
+    # This exists so we can reuse the TSV-based fast SQL import of Hits
     class TSVGenerator
       HEADER        = "date\tcount\tstatus\thost\tpath"
       HIT_NEVER_STR = Hit::NEVER.strftime('%Y-%m-%d')

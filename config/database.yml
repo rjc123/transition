@@ -1,5 +1,5 @@
 development:
-  adapter: mysql2
+  adapter: postgresql
   database: transition_development
   username: transition
   password: transition
@@ -9,14 +9,14 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test: &test
-  adapter: mysql2
+  adapter: postgresql
   database: transition_test<%= ENV['TEST_ENV_NUMBER'] %>
   username: transition
   password: transition
   local_infile: true
 
 production:
-  adapter: mysql2
+  adapter: postgresql
   database: transition_production
   local_infile: true
 
