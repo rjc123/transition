@@ -26,7 +26,9 @@ class Mapping < ActiveRecord::Base
 
   scope :with_status, -> status { where(http_status: Rack::Utils.status_code(status)) }
   scope :redirects, with_status(:moved_permanently)
-  scope :filtered_by_path, -> path { where(path.blank? ? true : Mapping.arel_table[:path].matches("%#{path}%")) }
+  scope :filtered_by_path, -> path {
+    path.blank? ? scoped : Mapping.where(Mapping.arel_table[:path].matches("%#{path}%"))
+  }
 
   def redirect?
     http_status == '301'
