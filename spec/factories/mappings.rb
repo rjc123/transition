@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :mapping do
-    http_status 410
+    http_status '410'
     path '/about/branding'
     association :site, strategy: :build
 

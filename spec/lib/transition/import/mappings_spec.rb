@@ -11,6 +11,11 @@ describe Transition::Import::Mappings do
     end
   end
 
+  describe '.field_list' do
+    subject { Transition::Import::Mappings.field_list('spec/fixtures/mappings/ago_abridged.csv') }
+    it { should == 'old_url,new_url,status'}
+  end
+
   describe '.from_redirector_csv_file!' do
     context 'a single import from a file with no suggested/archive URLs', testing_before_all: true do
       before :all do
@@ -22,8 +27,8 @@ describe Transition::Import::Mappings do
         Mapping.count.should == 3
       end
 
-      describe 'the first mapping' do
-        subject(:mapping) { Mapping.first }
+      describe 'the feed mapping' do
+        subject(:mapping) { Mapping.find_by_path!('/_layouts/feed.aspx') }
 
         its(:new_url)   { should eql('https://www.gov.uk/government/organisations/attorney-generals-office') }
         its(:path)      { should eql('/_layouts/feed.aspx') }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131104141642) do
+ActiveRecord::Schema.define(:version => 20131108100106) do
 
   create_table "hits", :force => true do |t|
     t.integer "host_id",                     :null => false
@@ -65,12 +65,12 @@ ActiveRecord::Schema.define(:version => 20131104141642) do
   create_table "mappings_staging", :id => false, :force => true do |t|
     t.text   "old_url"
     t.text   "new_url"
-    t.string "http_status"
+    t.string "status"
     t.string "host"
     t.string "path"
     t.string "path_hash"
-    t.text   "suggested_url"
-    t.text   "archive_url"
+    t.text   "suggested_link"
+    t.text   "archive_link"
   end
 
   create_table "organisations", :force => true do |t|
