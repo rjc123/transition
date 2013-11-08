@@ -6,12 +6,12 @@ Feature: List organisations
   Scenario: Visit the list page
     Given I have logged in as a GDS user
     And there are these organisations:
-      | abbr | title                                          |
-      | bis  | Department for Business, Innovation and Skills |
-      | fco  | Foreign Office                                 |
+      | title                                          |
+      | Department for Business, Innovation and Skills |
+      | Foreign Office                                 |
     When I visit the home page
     Then I should see "Signed in"
     And I should see the header "Organisations"
     And I should see a table with class "organisations" containing 2 rows
-    And I should see a link to the organisation bis
-    And I should see a link to the organisation fco
+    And I should see a link to the organisation Department for Business, Innovation and Skills
+    And I should see a link to the organisation Foreign Office

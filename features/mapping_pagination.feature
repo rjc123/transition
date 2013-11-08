@@ -5,9 +5,9 @@ Feature: Paginated mappings
 
   Scenario: There are no mappings for a site
     Given I have logged in as a GDS user
-    And there is a site called bis_lowpay belonging to an organisation bis with these mappings:
+    And there is a site called bis_lowpay belonging to an organisation Department for Business, Innovation & Skills with these mappings:
       | http_status | path             | new_url           |
-    When I visit the path /organisations/bis
+    When I visit the "Department for Business, Innovation & Skills" organisation page
     And I click the link called "bis_lowpay"
     Then I should see the header "Mappings"
     And the page title should be "bis_lowpay Mappings | GOV.UK Transition"
@@ -15,13 +15,13 @@ Feature: Paginated mappings
 
   Scenario: There are mappings for a site and we visit page 1
     Given I have logged in as a GDS user
-    And there is a site called bis_lowpay belonging to an organisation bis with these mappings:
+    And there is a site called bis_lowpay belonging to an organisation Department for Business, Innovation & Skills with these mappings:
       | http_status | path             | new_url           |
       | 410         | /about/corporate |                   |
       | 301         | /                | http://gov.uk/bis |
       | 410         | /something       |                   |
     And the mappings page size is 2
-    When I visit the path /organisations/bis
+    When I visit the "Department for Business, Innovation & Skills" organisation page
     And I click the link called "bis_lowpay"
     Then I should see the header "Mappings"
     And  I should see "bis_lowpay"
@@ -31,13 +31,13 @@ Feature: Paginated mappings
 
   Scenario: There are mappings for a site and we visit page 2
     Given I have logged in as a GDS user
-    And there is a site called bis_lowpay belonging to an organisation bis with these mappings:
+    And there is a site called bis_lowpay belonging to an organisation Department for Business, Innovation & Skills with these mappings:
       | http_status | path             | new_url           |
       | 410         | /about/corporate |                   |
       | 301         | /                | http://gov.uk/bis |
       | 410         | /something       |                   |
     And the mappings page size is 2
-    When I visit the path /organisations/bis
+    When I visit the "Department for Business, Innovation & Skills" organisation page
     And I click the link called "bis_lowpay"
     And I go to page 2
     Then  I should see a table with class "mappings" containing 1 row

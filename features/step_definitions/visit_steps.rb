@@ -10,6 +10,11 @@ When(/^I go to edit that mapping$/) do
   visit edit_site_mapping_path(@mapping.site, @mapping)
 end
 
+When(/^I visit the "([^"]*)" organisation page$/) do |org_title|
+  organisation = Organisation.find_by_title(org_title)
+  visit organisation_path(organisation)
+end
+
 When(/^I visit the associated organisation$/) do
   visit organisation_path(@site.organisation)
 end

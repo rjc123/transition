@@ -10,6 +10,7 @@ Then(/^I should see that this organisation is an executive non-departmental publ
   expect(page).to have_link('', href: organisation_path(@organisation.parent))
 end
 
-Then(/^I should see a link to the organisation (.*)$/) do |org_abbr|
-  expect(page).to have_link('', href: organisation_path(org_abbr))
+Then(/^I should see a link to the organisation (.*)$/) do |title|
+  organisation = Organisation.find_by_title(title)
+  expect(page).to have_link('', href: organisation_path(organisation))
 end
