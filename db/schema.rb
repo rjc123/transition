@@ -28,11 +28,11 @@ ActiveRecord::Schema.define(:version => 20131108100106) do
   add_index "hits", ["host_id"], :name => "index_hits_on_host_id"
 
   create_table "hits_staging", :id => false, :force => true do |t|
-    t.string  "hostname"
-    t.string  "path",        :limit => 1024
-    t.string  "http_status", :limit => 3
+    t.string  "host"
+    t.string  "path",   :limit => 1024
+    t.string  "status", :limit => 3
     t.integer "count"
-    t.date    "hit_on"
+    t.date    "date"
   end
 
   create_table "hosts", :force => true do |t|

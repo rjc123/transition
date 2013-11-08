@@ -6,6 +6,10 @@ class RenameStagingColumns < ActiveRecord::Migration
     rename_column :mappings_staging, :http_status, :status
     rename_column :mappings_staging, :suggested_url, :suggested_link
     rename_column :mappings_staging, :archive_url, :archive_link
+
+    rename_column :hits_staging, :http_status, :status
+    rename_column :hits_staging, :hit_on, :date
+    rename_column :hits_staging, :hostname, :host
   end
 
   def down
@@ -15,5 +19,9 @@ class RenameStagingColumns < ActiveRecord::Migration
     rename_column :mappings_staging, :status, :http_status
     rename_column :mappings_staging, :suggested_link, :suggested_url
     rename_column :mappings_staging, :archive_link, :archive_url
+
+    rename_column :hits_staging, :status, :http_status
+    rename_column :hits_staging, :date, :hit_on
+    rename_column :hits_staging, :host, :hostname
   end
 end

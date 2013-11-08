@@ -26,13 +26,17 @@ describe Transition::Import::Hits do
       end
 
       describe 'the first hit' do
-        subject(:hit) { Hit.first }
+        subject(:hit) { Hit.where(path: '/').first }
 
         its(:host)      { should eql(@businesslink_host) }
         its(:hit_on)    { should eql(Date.new(2012, 10, 14)) }
         its(:count)     { should eql(21) }
         its(:path)      { should eql('/') }
         its(:path_hash) { should eql('42099b4af021e53fd8fd4e056c2568d7c2e3ffa8') }
+      end
+
+      it 'survives a second import' do
+        Transition::Import::Hits.from_redirector_tsv_file!('spec/fixtures/hits/businesslink_2012-10-14.tsv')
       end
     end
   end

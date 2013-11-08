@@ -18,7 +18,10 @@ class HitsController < ApplicationController
     unless @period.single_day?
       @point_categories = View::Hits::Category.all.reject { |c| c.name == 'other' }.map do |category|
         category.tap do |c|
-          c.points = ((c.name == 'all') ? date_range.by_date : date_range.by_date_and_status.send(category.to_sym))
+          logger.warn "******* #{c.name}"
+          c.points = (c.name == 'all') ?
+            date_range.points_by_date :
+            date_range.points_by_date_and_status.send(category.to_sym)
         end
       end
     end
@@ -28,7 +31,7 @@ class HitsController < ApplicationController
     # Category - one of %w(archives redirect errors other) (see routes.rb)
     @category = View::Hits::Category[params[:category]].tap do |c|
       c.hits   = date_range.by_path_and_status.send(c.to_sym).page(params[:page]).order('count DESC')
-      c.points = params[:category] == 'other' ? date_range.by_date.other : date_range.by_date_and_status.send(c.to_sym)
+      c.points = params[:category] == 'other' ? date_range.points_by_date.other : date_range.points_by_date_and_status.send(c.to_sym)
     end
   end
 
@@ -38,15 +41,11 @@ class HitsController < ApplicationController
     @site = Site.find_by_abbr!(params[:site_id])
   end
 
-  def grouped
-    @site.hits.grouped
-  end
-
   def set_period
     @period = (View::Hits::TimePeriod[params[:period]] || View::Hits::TimePeriod.default)
   end
 
   def date_range
-    grouped.in_range(@period.start_date, @period.end_date)
+    @site.hits.in_range(@period.start_date, @period.end_date)
   end
 end
