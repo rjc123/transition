@@ -3,6 +3,8 @@ development:
   database: transition_development
   username: transition
   password: transition
+  variables:
+    work_mem: 10MB
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
