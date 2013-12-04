@@ -1,7 +1,9 @@
 <table class="hits table table-bordered">
   <thead>
   <tr>
-    <th class="status" scope="col">HTTP<br/>Status</th>
+    <% if category.name == 'all' %>
+      <th class="status" scope="col">HTTP<br/>Status</th>
+    <% end %>
     <th scope="col">Path</th>
     <th class="count" scope="col">Hits</th>
     <% if current_user.can_edit?(@site.organisation) %>
@@ -14,11 +16,13 @@
 
   <% hits.each do |hit| %>
     <tr>
-      <td class="status">
-        <abbr title="<%= "#{hit.http_status} — #{Rack::Utils::HTTP_STATUS_CODES[hit.http_status.to_i]}" %>">
-          <%= hit.http_status %>
-        </abbr>
-      </td>
+      <% if category.name == 'all' %>
+        <td class="status">
+          <abbr title="<%= "#{hit.http_status} — #{Rack::Utils::HTTP_STATUS_CODES[hit.http_status.to_i]}" %>">
+            <%= hit.http_status %>
+          </abbr>
+        </td>
+      <% end %>
       <td class="remove-padding">
         <div class="bar-chart-wrap">
           <%= render partial: 'bar_chart_row', locals: { count: hit.count, max: max, status: hit.http_status } %>

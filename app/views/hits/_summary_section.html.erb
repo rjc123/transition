@@ -11,7 +11,7 @@
   </h2>
   
   <% if category.hits.any? %>
-    <%= render partial: 'hits_table', locals: { hits: category.hits} %>
+    <%= render partial: 'hits_table', locals: { hits: category.hits, category: category} %>
     <%= link_to "See all #{category.name}", (send category.path_method, @site, period: @period.query_slug) %>
   <% else %>
     <p class="no-content no-content-bordered">

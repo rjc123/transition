@@ -20,7 +20,7 @@
 <%= paginate hits %>
 
 <% if hits.total_count > 0 %>
-  <%= render partial: 'hits_table', locals: { hits: hits } %>
+  <%= render partial: 'hits_table', locals: { hits: hits, category: category } %>
 <% else %>
   <p class="no-content no-content-bordered">
     <%= no_content_message %>
