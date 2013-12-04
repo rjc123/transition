@@ -36,11 +36,33 @@ class Hit < ActiveRecord::Base
   scope :other,      -> { where("http_status NOT IN ('404', '410', '301')") }
   scope :top_ten,    -> { order('count DESC').limit(10) }
 
+  def has_mapping?(site)
+    mapping = self.mapping(site)
+    mapping.present?
+  end
+
+  def has_redirect_mapping?(site)
+    mapping = self.mapping(site)
+    mapping.present? && mapping.redirect?
+  end
+
+  def has_archive_mapping?(site)
+    mapping = self.mapping(site)
+    mapping.present? && !mapping.redirect?
+  end
+
   protected
   def set_path_hash
     self.path_hash = Digest::SHA1.hexdigest(path) if path_changed?
   end
+
   def normalize_hit_on
     self.hit_on = hit_on.beginning_of_day if hit_on_changed?
   end
+
+  def mapping(site)
+    path = site.canonicalize_path(self.path)
+    site.mappings.find_by_path(path)
+  end
+
 end
