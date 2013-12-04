@@ -1,14 +1,27 @@
 <table class="hits table table-bordered">
   <thead>
-  <tr>
+  <tr style="background-color: #eee">
+    <th style="width: 26px"></th>
     <% if category.name == 'all' %>
       <th class="status" scope="col">HTTP<br/>Status</th>
     <% end %>
     <th scope="col">Path</th>
     <th class="count" scope="col">Hits</th>
-    <% if current_user.can_edit?(@site.organisation) %>
-      <th class="action" scope="col">Action</th>
-    <% end %>
+  </tr>
+  <tr style="background-color: #f9f9f9; box-shadow: rgba(0,0,0,0.5) 0 2px; z-index: 1; position: relative;">
+    <td style="text-align: center">
+      <label style="display: block; width: 26px; margin-top: -2px; margin-bottom: 0"><input type="checkbox" class="js-check-all">
+    </td>
+    <td colspan="2">
+      <div class="btn-group">
+        <% unless category.name == 'redirects' %>
+          <a href="#redirect-modal" class="btn" data-toggle="modal">Redirect selected paths</a>
+        <% end %>
+        <% unless category.name == 'archives' %>
+          <a href="#archive-modal" class="btn" data-toggle="modal">Archive selected paths</a>
+        <% end %>
+      </div>
+    </td>
   </tr>
   </thead>
   <tbody>
@@ -16,6 +29,9 @@
 
   <% hits.each do |hit| %>
     <tr>
+      <td style="text-align: center">
+        <label style="display: block; width: 26px;  margin-bottom: 0; margin-top: -2px"><input type="checkbox" class="js-check"></label>
+      </td>
       <% if category.name == 'all' %>
         <td class="status">
           <abbr title="<%= "#{hit.http_status} — #{Rack::Utils::HTTP_STATUS_CODES[hit.http_status.to_i]}" %>">
@@ -30,11 +46,6 @@
         </div>
       </td>
       <td class="count"><%= number_with_delimiter hit.count %></td>
-      <% if current_user.can_edit?(@site.organisation) %>
-        <td class="action">
-          <%= link_to 'Check mapping', site_mapping_find_path(@site, path: hit.path), class: 'btn btn-mini' %>
-        </td>
-      <% end %>
     </tr>
   <% end %>
   </tbody>

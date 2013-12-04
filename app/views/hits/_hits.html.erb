@@ -20,6 +20,74 @@
 <%= paginate hits %>
 
 <% if hits.total_count > 0 %>
+
+  <div id="archive-modal" class="modal hide">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Archive paths</h3>
+    </div>
+    <div class="modal-body">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Original paths</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><a href="#">/about</a></td>
+        </tr>
+        <tr>
+          <td><a href="#">/about/us</a></td>
+        </tr>
+        <tr>
+          <td><a href="#">/about/us/the-team/pages.aspx</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <a href="#" data-dismiss="modal" class="btn">Cancel</a>
+      <a href="#" data-dismiss="modal" class="btn btn-success">Save</a>
+    </div>
+  </div>
+
+  <div id="redirect-modal" class="modal hide">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Redirect paths</h3>
+    </div>
+    <div class="modal-body">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Original paths</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><a href="#">/about</a></td>
+        </tr>
+        <tr>
+          <td><a href="#">/about/us</a></td>
+        </tr>
+        <tr>
+          <td><a href="#">/about/us/the-team/pages.aspx</a></td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <label for="redirect-to">Redirect to</label>
+        <input type="text" id="redirect-to">
+      </div>
+    
+    </div>
+    <div class="modal-footer">
+      <a href="#" data-dismiss="modal" class="btn">Cancel</a>
+      <a href="#" data-dismiss="modal" class="btn btn-success">Save</a>
+    </div>
+  </div>
+
   <%= render partial: 'hits_table', locals: { hits: hits, category: category } %>
 <% else %>
   <p class="no-content no-content-bordered">
@@ -28,3 +96,4 @@
 <% end %>
 
 <%= paginate hits %>
+<script>GOVUK.Mappings.toggles()</script>

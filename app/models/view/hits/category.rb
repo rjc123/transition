@@ -10,8 +10,7 @@ module View
         'all'       => '#333',
         'errors'    => '#e99',
         'archives'  => '#aaa',
-        'redirects' => '#9e9',
-        'other'     => '#aaa'
+        'redirects' => '#9e9'
       }
 
       def self.all
@@ -66,7 +65,14 @@ module View
       end
 
       def title
-        name == 'all' ? 'All hits' : name.capitalize
+        case name
+        when 'all'
+          'All hits'
+        when 'errors'
+          'Missing mappings'
+        else
+          name.capitalize
+        end
       end
 
       def plural

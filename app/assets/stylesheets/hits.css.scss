@@ -37,6 +37,10 @@
   min-height: 40px;
 }
 
+.selected-row .bar-chart-row {
+  background-color: #fffcd5 !important;
+}
+
 .bar-chart-row-301 {
   background-color: $goodHTTPStatusColor;
 }
