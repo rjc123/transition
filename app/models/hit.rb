@@ -5,6 +5,9 @@ class Hit < ActiveRecord::Base
   NEVER = Date.new(1970, 1, 1)
 
   belongs_to :host
+  # belongs_to :url, foreign_key: :path_hash, conditions: 'hits.site_id = urls.site_id'
+  belongs_to :url
+
   validates :host, :hit_on, presence: true
   validates :path, presence: true, length: { maximum: 1024 }
   validates :count, presence: true, numericality: { greater_than_or_equal_to: 0, only_integer: true }

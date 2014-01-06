@@ -45,7 +45,7 @@ module Transition
           (hit_on, count, http_status, hostname, path)
       mySQL
 
-      INSERT_FROM_STAGING = <<-mySQL
+      INSERT_INTO_HITS = <<-mySQL
         INSERT IGNORE INTO hits (host_id, path, path_hash, http_status, `count`, hit_on)
         SELECT h.id, st.path, SHA1(st.path), st.http_status, st.count, st.hit_on
         FROM   hits_staging st
@@ -54,16 +54,47 @@ module Transition
         AND    st.path NOT IN (#{BOUNCER_PATHS.map { |path| "'" + path + "'" }.join(', ')})
       mySQL
 
+      INSERT_INTO_URLS = <<-mySQL
+        INSERT IGNORE INTO urls (host_id, path, path_hash)
+        SELECT h.id, st.path, SHA1(st.path)
+        FROM   hits_staging st
+        INNER JOIN hosts h on h.hostname = st.hostname
+        WHERE  st.count >= 10
+        AND    st.path NOT IN (#{BOUNCER_PATHS.map { |path| "'" + path + "'" }.join(', ')})
+      mySQL
+
+      RELATE_URLS_AND_HITS = <<-mySQL
+        UPDATE hits
+        SET hits.url_id = (
+          SELECT urls.id FROM urls
+          WHERE  urls.host_id = hits.host_id
+          AND    urls.path_hash = hits.path_hash
+        )
+      mySQL
+
       def self.from_redirector_tsv_file!(filename)
+        # TODO maybe do inserts/updates in a transaction? see line 98 first
         $stderr.print "Importing #{filename} ... "
         [
           TRUNCATE,
           LOAD_DATA.sub('$filename$', "'#{File.expand_path(filename)}'"),
-          INSERT_FROM_STAGING
+          INSERT_INTO_URLS,
+          INSERT_INTO_HITS,
+          RELATE_URLS_AND_HITS
         ].flatten.each do |statement|
           ActiveRecord::Base.connection.execute(statement)
         end
+        # Hits.foo
         $stderr.puts 'done.'
+      end
+
+      def self.foo
+        URL.where('mapping_id is null').each do |url|
+          canonical_path = url.host.site.canonical_path(url.path)
+          canonical_path_hash = Digest::SHA1.hexdigest(canonical_path)
+          mapping_id = Mapping.where(path_hash: canonical_path_hash).pluck(:id).first
+          url.update_column(:mapping_id, mapping_id)
+        end
       end
 
       def self.from_redirector_mask!(filemask)

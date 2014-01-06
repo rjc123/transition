@@ -7,3 +7,18 @@
 
 <%= render :partial => 'form' %>
 
+<table>
+  <thead>
+    <tr>
+      <th>Hits</th>
+      <th>URL</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @mapping.urls.each do |url| %>
+    <tr>
+      <td><%= number_with_delimiter(url.hits.sum(:count)) %></td>
+      <td><%= url.path %></td>
+    </tr>
+  <% end %>
+</table>

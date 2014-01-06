@@ -16,11 +16,13 @@ CREATE TABLE `hits` (
   `http_status` varchar(3) COLLATE utf8_bin NOT NULL,
   `count` int(11) NOT NULL,
   `hit_on` date NOT NULL,
+  `url_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_hits_on_host_id_and_path_hash_and_hit_on_and_http_status` (`host_id`,`path_hash`,`hit_on`,`http_status`),
   KEY `index_hits_on_host_id` (`host_id`),
   KEY `index_hits_on_host_id_and_hit_on` (`host_id`,`hit_on`),
-  KEY `index_hits_on_host_id_and_http_status` (`host_id`,`http_status`)
+  KEY `index_hits_on_host_id_and_http_status` (`host_id`,`http_status`),
+  KEY `index_hits_on_url_id` (`url_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `hits_staging` (
@@ -122,6 +124,18 @@ CREATE TABLE `sites` (
   KEY `index_sites_on_organisation_id` (`organisation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE `urls` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `host_id` int(11) NOT NULL,
+  `path` varchar(1024) COLLATE utf8_bin NOT NULL,
+  `path_hash` varchar(40) COLLATE utf8_bin NOT NULL,
+  `mapping_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_urls_on_host_id_and_path_hash` (`host_id`,`path_hash`),
+  KEY `index_urls_on_host_id` (`host_id`),
+  KEY `index_urls_on_mapping_id` (`mapping_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -203,3 +217,9 @@ INSERT INTO schema_migrations (version) VALUES ('20131203102650');
 INSERT INTO schema_migrations (version) VALUES ('20131203115518');
 
 INSERT INTO schema_migrations (version) VALUES ('20131231133153');
+
+INSERT INTO schema_migrations (version) VALUES ('20140103133935');
+
+INSERT INTO schema_migrations (version) VALUES ('20140103160040');
+
+INSERT INTO schema_migrations (version) VALUES ('20140115180753');

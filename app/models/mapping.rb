@@ -16,6 +16,8 @@ class Mapping < ActiveRecord::Base
   has_paper_trail
 
   belongs_to :site
+  has_many :urls, class_name: URL
+
   validates :site, presence: true
   validates :path,
             length: { maximum: 1024 },
