@@ -27,11 +27,7 @@
         <% if current_user.can_edit?(@site.organisation) %>
           <th></th>
         <% end %>
-        <th class="mapping-type-header" scope="col" style="width: 100px">Type</th>
-        <th scope="col">
-          Original path<br /><span class="text-muted">from <%= @site.default_host.hostname %></span>
-        </th>
-        <th scope="col" style="width: 150px">
+        <th class="mapping-type-header" scope="col" style="width: 120px">
           <a href="#help" class="glyphicon glyphicon-question-sign link-muted pull-right" style="text-decoration: none" data-toggle="popover" data-content="
           <strong>High</strong>
           <p>Lorem ipsum dolor sit amet.</p>
@@ -40,6 +36,14 @@
           <strong>Low</strong>
           <p>Lorem ipsum dolor sit amet.</p>
           " role="button" data-original-title="Traffic priority"></a>
+          Type<br />
+          <span class="text-muted">eg. redirect</span>
+        </th>
+        <th scope="col">
+          Original path<br /><span class="text-muted">from <%= @site.default_host.hostname %></span>
+        </th>
+        <th scope="col" style="width: 150px">
+          <a href="#help" class="glyphicon glyphicon-question-sign link-muted pull-right" style="text-decoration: none" data-toggle="popover" data-content="misc" role="button" data-original-title="Traffic priority"></a>
           
           Traffic&nbsp;priority<br />
           <span class="text-muted">hits per day</span>
@@ -62,7 +66,7 @@
           </div>
         </td>
         <td class="mapping-type-none">
-          None <span class="glyphicon glyphicon-question-sign text-muted"></span>
+          None
         </td>
         <td>
           <strong><a href="http://www.ukba.homeoffice.gov.uk/sitecontent/applicationforms/asylum/hpdlform.pdf" class="breakable">/sitecontent/applicationforms/asylum/hpdlform.pdf</a></strong>
@@ -86,7 +90,7 @@
           </div>
         </td>
         <td class="mapping-type-pending">
-          Pending<br />content&nbsp;<span class="glyphicon glyphicon-question-sign text-muted"></span>
+          Pending<br />content
         </td>
         <td>
           <strong><a href="http://www.ukba.homeoffice.gov.uk/sitecontent/applicationforms/asylum/hpdlform.pdf" class="breakable">/sitecontent/applicationforms/nothing/here/hpdlform234.pdf</a></strong>
