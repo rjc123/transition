@@ -29,7 +29,20 @@
         <% end %>
         <th class="mapping-type-header" scope="col">Type</th>
         <th scope="col">
-          Original path from <%= @site.default_host.hostname %>
+          Original path<br /><span class="text-muted">from <%= @site.default_host.hostname %></span>
+        </th>
+        <th scope="col" style="width: 150px">
+          <a href="#help" class="glyphicon glyphicon-question-sign link-muted pull-right" style="text-decoration: none" data-toggle="popover" data-content="
+          <strong>High</strong>
+          <p>Lorem ipsum dolor sit amet.</p>
+          <strong>Medium</strong>
+          <p>Lorem ipsum dolor sit amet.</p>
+          <strong>Low</strong>
+          <p>Lorem ipsum dolor sit amet.</p>
+          " role="button" data-original-title="Traffic priority"></a>
+          
+          Traffic&nbsp;priority<br />
+          <span class="text-muted">hits per day</span>
         </th>
         <% if current_user.can_edit?(@site.organisation) %>
           <th></th>
@@ -60,6 +73,24 @@
             <br><span class="text-muted">redirects to</span>
             <%= link_to mapping.new_url, mapping.new_url, class: 'link-muted breakable' if mapping.new_url.present? %>
           <% end %>
+        </td>
+        <td>
+          <!-- <span class="glyphicon glyphicon-stats"></span> -->
+          <%
+            x = rand(0..2)
+            y = rand(0..200000)
+
+            case x
+              when 0
+                p = "High"
+              when 1
+                p = "Medium"
+              when 2
+                p = "Low"
+            end
+          %>
+          <%= p %><br />
+          <span class="text-muted"><%= number_with_delimiter(y) %></span>
         </td>
         <% if current_user.can_edit?(@site.organisation) %>
           <td class="text-right">
@@ -95,3 +126,8 @@
     No mappings found
   </p>
 <% end %>
+
+<script>
+  $('[data-toggle="tooltip"]').tooltip();
+  $('[data-toggle="popover"]').popover({placement: 'left', html: true});
+</script>

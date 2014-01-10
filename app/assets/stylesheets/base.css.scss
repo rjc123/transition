@@ -217,6 +217,12 @@ thead .table-header-secondary td {
   padding-top: 0;
 }
 
+th .popover {
+  font-weight: normal;
+  width: 400px;
+  max-width: initial;
+}
+
 /* Selectable rows
    ==========================================================================
    Fill table cell with label to make the whole cell clickable.
