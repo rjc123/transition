@@ -1,15 +1,41 @@
-<%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'form') do %>
-  <div class="row">
-    <div class="col-md-6">
-      <%= label_tag :contains, class: 'control-label' do %>
-        Filter by path <% if params[:contains] and params[:contains].length > 0 %>(<%= link_to 'Remove filter', site_mappings_path(@site) %>)<% end %>
-      <% end %>
-      <div class="input-group">
-        <%= text_field_tag :contains, params[:contains], class: 'form-control', placeholder: 'eg /home'  %>
-        <span class="input-group-btn">
-          <%= button_tag 'Filter', name: nil, class: 'btn btn-default ' %>
-        </span>
+<div class="panel panel-default">
+  <div class="panel-heading">Filter mappings</div>
+  <div class="panel-body">
+
+      <div class="row form">
+        <div class="col-md-3">
+          <label>By type</label>
+          <select name="" class="form-control">
+            <option value="">All mappings</option>
+            <option value="">Redirects</option>
+            <option value="">Archives</option>
+            <option value="">No mapping</option>
+            <option value="">Pending content</option>
+            <option value="">Tagged: ‘corporate’</option>
+            <option value="">Tagged: ‘about’</option>
+            <option value="">Tagged: ‘files’</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label>By traffic priority</label>
+          <select name="" class="form-control">
+            <option value="">All mappings</option>
+            <option value="">High</option>
+            <option value="">Medium</option>
+            <option value="">Low</option>
+          </select>
+        </div>
+        <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'col-md-6') do %>
+          <%= label_tag :contains, class: 'control-label' do %>
+            By path <% if params[:contains] and params[:contains].length > 0 %>(<%= link_to 'Remove filter', site_mappings_path(@site) %>)<% end %>
+          <% end %>
+          <div class="input-group">
+            <%= text_field_tag :contains, params[:contains], class: 'form-control', placeholder: 'eg /home'  %>
+            <span class="input-group-btn">
+              <%= button_tag 'Filter', name: nil, class: 'btn btn-default ' %>
+            </span>
+          </div>
+        <% end %>
       </div>
-    </div>
   </div>
-<% end %>
+</div>

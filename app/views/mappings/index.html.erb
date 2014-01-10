@@ -5,13 +5,11 @@
 <div class="page-title-with-border">
   <h1>
     <span class="small"><%= @site.default_host.hostname %></span>
-    Mappings
+    Mappings (<%= number_with_delimiter(@mappings.total_count) %>)
   </h1>
 </div>
 
 <%= render partial: 'filters' %>
-
-<h2><%= pluralize(number_with_delimiter(@mappings.total_count, :delimiter => ','), 'mapping', 'mappings') %></h2>
 
 <% if @mappings.any? %>
 
