@@ -27,7 +27,7 @@
         <% if current_user.can_edit?(@site.organisation) %>
           <th></th>
         <% end %>
-        <th class="mapping-type-header" scope="col">Type</th>
+        <th class="mapping-type-header" scope="col" style="width: 100px">Type</th>
         <th scope="col">
           Original path<br /><span class="text-muted">from <%= @site.default_host.hostname %></span>
         </th>
@@ -53,6 +53,56 @@
       <% end %>
     </thead>
     <tbody>
+      <tr data-status-code="x">
+        <td class="selectable-row">
+          <div class="relative">
+            <label>
+              <input class="js-toggle-row" id="mapping_ids_" name="mapping_ids[]" type="checkbox" value="459173">
+            </label>
+          </div>
+        </td>
+        <td class="mapping-type-none">
+          None <span class="glyphicon glyphicon-question-sign text-muted"></span>
+        </td>
+        <td>
+          <strong><a href="http://www.ukba.homeoffice.gov.uk/sitecontent/applicationforms/asylum/hpdlform.pdf" class="breakable">/sitecontent/applicationforms/asylum/hpdlform.pdf</a></strong>
+        </td>
+        <td>
+          High<br>
+          <span class="text-muted">14,359</span>
+        </td>
+        <td class="text-right">
+          <a href="/sites/ukba/mappings/459173/edit" class="btn btn-default btn-xs">
+            Edit
+          </a>
+        </td>
+      </tr>
+      <tr data-status-code="x">
+        <td class="selectable-row">
+          <div class="relative">
+            <label>
+              <input class="js-toggle-row" id="mapping_ids_" name="mapping_ids[]" type="checkbox" value="459173">
+            </label>
+          </div>
+        </td>
+        <td class="mapping-type-pending">
+          Pending<br />content&nbsp;<span class="glyphicon glyphicon-question-sign text-muted"></span>
+        </td>
+        <td>
+          <strong><a href="http://www.ukba.homeoffice.gov.uk/sitecontent/applicationforms/asylum/hpdlform.pdf" class="breakable">/sitecontent/applicationforms/nothing/here/hpdlform234.pdf</a></strong>
+          <br /><span class="text-muted">pending</span>
+          <a href="https://whitehall-admin.preview.alphagov.co.uk/government/admin/consultations/13691" class="link-muted">https://whitehall-admin.preview.alphagov.co.uk/government/admin/consultations/13691</a>
+        </td>
+        <td>
+          High<br>
+          <span class="text-muted">14,359</span>
+        </td>
+        <td class="text-right">
+          <a href="/sites/ukba/mappings/459173/edit" class="btn btn-default btn-xs">
+            Edit
+          </a>
+        </td>
+      </tr>
     <% @mappings.each do |mapping| %>
       <tr data-status-code="<%= mapping.http_status %>">
         <% if current_user.can_edit?(@site.organisation) %>
@@ -95,7 +145,7 @@
         <% if current_user.can_edit?(@site.organisation) %>
           <td class="text-right">
             <%= link_to edit_site_mapping_path(@site, mapping), class: 'btn btn-default btn-xs' do %>
-              Edit&nbsp;mapping
+              Edit
             <% end %>
           </td>
         <% end %>
