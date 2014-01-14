@@ -4,30 +4,123 @@
 
 <div class="page-title-with-border">
   <h1>
-    <span class="small"><%= @site.default_host.hostname %></span>
-    Site details
+    <%= @site.default_host.hostname %>
   </h1>
 </div>
 
-<dl class="dl-spaced">
-  <dt>Mappings</dt>
-  <dd><%= link_to 'Mappings', site_mappings_path(@site) %></dd>
-  <dt>Analytics</dt>
-  <dd><%= link_to 'Analytics', summary_site_hits_path(@site) %></dd>
-  <dt>Default hostname</dt>
-  <dd><%= @site.default_host.hostname %></dd>
-  <dt>Hostname aliases</dt>
-  <dd><%= @site.hosts.pluck(:hostname).join(', ') %></dd>
-  <dt>New homepage</dt>
-  <dd><%= link_to @site.homepage, @site.homepage, class: 'breakable' %></dd>
-  <dt>Abbreviation</dt>
-  <dd><%= @site.abbr %></dd>
-  <dt>Significant query parameters</dt>
-  <dd><%= @site.query_params.presence || 'None' %></dd>
-  <dt>The National Archive (<abbr>TNA</abbr>) timestamp</dt>
-  <dd><%= @site.tna_timestamp.to_formatted_s(:long) %> <span class="text-muted"> — <%= @site.tna_timestamp.to_formatted_s(:number) %></span></dd>
-  <dt>Transition status</dt>
-  <dd><%= render partial: 'transition_status', locals: {site: @site} %></dd>
-  <dt>Transition date</dt>
-  <dd><%= date_or_not_yet(@site.launch_date) %></dd>
-</dl>
+<div class="row">
+  <div class="col-md-8">
+
+    <h3 class="remove-top-margin add-bottom-margin">Mappings</h3>
+
+    <div class="list-group add-big-bottom-margin">
+      <%= link_to site_mappings_path(@site), class: 'list-group-item' do %>
+        <h4 class="list-group-item-heading">All mappings</h4>
+        <p class="list-group-item-text"><strong><%= pluralize(number_with_delimiter(@site.mappings.size), 'mapping') %></strong>. Make changes to mappings for old site URLs. Mappings are live, and changes will take effect within one hour.</p>
+      <% end %>
+
+      <div class="list-group-item">
+        <h4 class="list-group-item-heading">Mappings tagged with</h4>
+        <p class="list-group-item-text" style="font-size: 18px; line-height: 36px"><a href="#" class="label label-primary">content-type:nav</a> <a href="#" class="label label-primary">destination:content</a> <a href="#" class="label label-primary">reviewed:no</a> <a href="#" class="label label-primary">corporate</a> <a href="#" class="label label-primary">content-type:nav</a> <a href="#" class="label label-primary">destination:content</a> <a href="#" class="label label-primary">reviewed:no</a> <a href="#" class="label label-primary">corporate</a></p>
+      </div>
+
+      <%= link_to site_mappings_path(@site), class: 'list-group-item' do %>
+        <h4 class="list-group-item-heading">Fix paths without mappings</h4>
+        <p class="list-group-item-text">There are <strong><%= pluralize(number_with_delimiter((@site.mappings.size * 0.2).to_i), 'path') %></strong> that will show a "page not found" message to users visiting them. Some of these are acceptable because that content never existed, but some, particularly high traffic mappings, may be mappings we’ve missed until now.</p>
+      <% end %>
+
+      <%= link_to site_mappings_path(@site), class: 'list-group-item' do %>
+        <h4 class="list-group-item-heading">Check high traffic archives for missed user needs</h4>
+        <p class="list-group-item-text">There are <strong><%= pluralize(number_with_delimiter((@site.mappings.size * 0.1).to_i), 'archived path') %></strong> with high traffic. It’s possible some of these paths served a valid user need that we’ve missed until now.</p>
+      <% end %>
+
+      <%= link_to site_mappings_path(@site), class: 'list-group-item' do %>
+        <h4 class="list-group-item-heading">Add mappings</h4>
+        <p class="list-group-item-text">Add new site paths in bulk, marking them as archives or redirecting them to a single new URL.</p>
+      <% end %>
+    </div>
+
+    <h3 class="remove-top-margin add-bottom-margin">Performance</h3>
+    <div class="list-group add-big-bottom-margin">
+      <%= link_to site_hits_path(@site), class: 'list-group-item' do %>
+        <h4 class="list-group-item-heading">Analytics for <%= @site.default_host.hostname %></h4>
+        <p class="list-group-item-text">Graphs and tables charting <abbr data-toggle="tooltip" title="Resources served from the website including pages, images and file downloads.">hits</abbr> to the old <%= @site.default_host.hostname %>. Use analytics to see how many users are visiting old URLs and what proportion of them are being redirected, seeing archives or finding errors.</p>
+      <% end %>
+    </div>
+
+    <h3 class="add-bottom-margin">Site details</h3>
+    <div class="panel panel-default">
+      <dl class="panel-body dl-spaced remove-bottom-margin">
+        <dt>Default hostname</dt>
+        <dd><%= @site.default_host.hostname %></dd>
+        <dt>Hostname aliases</dt>
+        <dd><%= @site.hosts.pluck(:hostname).join(', ') %></dd>
+        <dt>New homepage</dt>
+        <dd><%= link_to @site.homepage, @site.homepage, class: 'breakable' %></dd>
+        <dt>Abbreviation</dt>
+        <dd><%= @site.abbr %></dd>
+        <dt>Significant query parameters</dt>
+        <dd><%= @site.query_params.presence || 'None' %></dd>
+        <dt>The National Archive (<abbr>TNA</abbr>) timestamp</dt>
+        <dd><%= @site.tna_timestamp.to_formatted_s(:long) %> <span class="text-muted"> — <%= @site.tna_timestamp.to_formatted_s(:number) %></span></dd>
+        <dt>Transition status</dt>
+        <dd><%= render partial: 'transition_status', locals: {site: @site} %></dd>
+        <dt>Transition date</dt>
+        <dd><%= date_or_not_yet(@site.launch_date) %></dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+
+    <h3 class="remove-top-margin add-bottom-margin">Transition</h3>
+    <div class="highlight add-bottom-margin" style="background-color: #28A197">
+      <span class="big-number">Live</span>
+    </div>
+    <div class="highlight">
+      <span class="big-number">124 days</span>
+      since transition<br /><br />
+      <%= date_or_not_yet(@site.launch_date) %>
+    </div>
+
+    <h3 class="add-bottom-margin">Recent changes</h3>
+
+    <div class="list-group add-big-bottom-margin">
+      <div class="list-group-item">
+        <h4 class="list-group-item-heading add-bottom-margin">Paul Hayes added 104 mappings</h4>
+        <ul class="remove-bottom-margin">
+          <li>
+           <a href="#">/about</a>
+          </li>
+          <li>
+           <a href="#">/about-us</a>
+          </li>
+          <li>
+           <a href="#">/something-else</a>
+          </li>
+          <li>
+           <a href="#">More…</a>
+          </li>
+        </ul>
+      </div>
+      <div class="list-group-item">
+        <h4 class="list-group-item-heading add-bottom-margin">Paul Hayes added 104 mappings</h4>
+        <ul class="remove-bottom-margin">
+          <li>
+           <a href="#">/about</a>
+          </li>
+          <li>
+           <a href="#">/about-us</a>
+          </li>
+          <li>
+           <a href="#">/something-else</a>
+          </li>
+          <li>
+           <a href="#">More…</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -159,6 +159,11 @@ main a {
   &.btn-inverse:visited {
     color: $inverse-button-color;
   }
+
+  &.list-group-item:visited {
+    color: $gray-light;
+  }
+
 }
 
 .link-muted,
@@ -283,5 +288,28 @@ th .popover {
 .no-content-bordered {
   border: 1px solid $table-border-color;
   border-radius: $border-radius-base;
+}
+
+.highlight {
+  text-align: center;
+  background: #428bca; /* #2b8cc4; */
+  padding: 2 * $default-vertical-margin;
+  color: #fff;
+  font-size: 19px;
+}
+
+.big-number {
+  font-size: 47px;
+  font-weight: bold;
+  display: block;
+}
+
+.list-group-item {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.list-group-item-heading {
+  margin-bottom: 6px;
 }
 
