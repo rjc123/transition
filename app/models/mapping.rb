@@ -26,7 +26,7 @@ class Mapping < ActiveRecord::Base
 
   # set a hash of the path because we can't have a unique index on
   # the path (it's too long)
-  before_validation :trim_scheme_host_and_port_from_path, :fill_in_scheme, :canonicalize_path, :set_path_hash
+  before_validation :trim_scheme_host_and_port_from_path!, :fill_in_scheme!, :canonicalize_path!, :set_path_hash
   validates :path_hash, presence: true
 
   validates :new_url, :suggested_url, :archive_url, length: { maximum: (64.kilobytes - 1) }, non_blank_url: true
@@ -87,7 +87,7 @@ class Mapping < ActiveRecord::Base
   end
 
   protected
-  def fill_in_scheme
+  def fill_in_scheme!
     self.new_url       = Mapping.ensure_url(new_url)
     self.suggested_url = Mapping.ensure_url(suggested_url)
     self.archive_url   = Mapping.ensure_url(archive_url)
@@ -107,7 +107,7 @@ class Mapping < ActiveRecord::Base
     end
   end
 
-  def trim_scheme_host_and_port_from_path
+  def trim_scheme_host_and_port_from_path!
     uri = URI.parse(path)
     self.path = uri.request_uri if uri.respond_to?(:request_uri)
   rescue URI::InvalidURIError
@@ -118,7 +118,7 @@ class Mapping < ActiveRecord::Base
     self.path_hash = Digest::SHA1.hexdigest(path) if path_changed?
   end
 
-  def canonicalize_path
+  def canonicalize_path!
     self.path = site.canonical_path(path) unless (site.nil? || path == '/' || path =~ /^[^\/]/)
   end
 
