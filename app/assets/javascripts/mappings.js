@@ -16,7 +16,7 @@
           archiveFields = form.find('.js-for-archive'),
           redirectFields = form.find('.js-for-redirect');
 
-      httpStatus.on('change', toggleFormFieldsets);
+      httpStatus.on('change', 'input', toggleFormFieldsets);
       toggleFormFieldsets();
 
       form.find('[data-module="toggle"]').each(function() {
@@ -25,7 +25,7 @@
 
       function toggleFormFieldsets() {
 
-        var selectedHTTPStatus = httpStatus.val();
+        var selectedHTTPStatus = httpStatus.find('input:checked').val();
 
         switch (selectedHTTPStatus) {
 

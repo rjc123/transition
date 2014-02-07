@@ -42,15 +42,6 @@ module MappingsHelper
     end
   end
 
-  ##
-  # Return a FormBuilder-compatible list of HTTP Status codes with descriptions
-  # e.g. [['Redirect', '301'], ['Archive', '410']]
-  def options_for_supported_statuses
-    Mapping::TYPES.map do |status, type|
-      ["#{type.titleize}", status]
-    end
-  end
-
   OTHER_OPERATIONS = { 'tag' => 'tag' }
   def http_status_name(http_status)
     Mapping::TYPES[http_status].try(:titleize)

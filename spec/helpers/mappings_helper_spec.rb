@@ -16,12 +16,6 @@ describe MappingsHelper do
     it { should include(%(<li><a href="#{site_mapping_versions_path(@mapping.site, @mapping)}")) }
   end
 
-  describe '#options_for_supported_statuses' do
-    it 'provides an array of supported statuses in a form compatible with FormBuilder#select' do
-      helper.options_for_supported_statuses.should == [['Redirect', '301'], ['Archive', '410']]
-    end
-  end
-
   describe '#http_status_name' do
     context 'status is \'301\'' do
       subject { helper.http_status_name('301') }
