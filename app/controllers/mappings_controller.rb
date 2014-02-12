@@ -38,6 +38,13 @@ class MappingsController < ApplicationController
       end
 
     @mappings = @site.mappings.order(:path).page(params[:page])
+
+    if params[:http_status] == '301'
+      @mappings = @mappings.redirects
+    elsif (params[:http_status] == '410')
+      @mappings = @mappings.archives
+    end
+
     @mappings = if params[:filter_field] == 'new_url'
       @mappings.redirects.filtered_by_new_url(@path_contains)
     else

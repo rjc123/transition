@@ -68,6 +68,10 @@ label {
   color: inherit;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
 /* Form helpers
    ========================================================================== */
 
@@ -197,6 +201,10 @@ main a {
     color: $link-color;
   }
 
+}
+
+.dropdown-menu li a:visited {
+  color: $text-color;
 }
 
 .link-muted,

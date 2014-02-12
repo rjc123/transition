@@ -1,25 +1,70 @@
-<%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'form') do %>
-  <div class="row">
-    <div class="col-md-6">
-      <fieldset class="add-label-margin">
-        <legend class="legend-inline bold">Filter by</legend>
-        <% [['path', 'Original path'], ['new_url', 'New URL']].each do |field_name, label_text| %>
-          <%= label_tag nil, class: 'radio-inline' do %>
-            <%= radio_button_tag :filter_field, field_name, filter_box_selected?(params[:filter_field], field_name) %>
-            <%= label_text %>
-          <% end %>
+<!-- Split button -->
+<% tags = most_used_tags_for_site(@site, limit: 10)%>
+<div class="btn-group">
+  <button type="button" class="btn btn-default">Filter</button>
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+    <li><a href="?">All mappings</a></li>
+    <li><a href="?http_status=301">All redirects</a></li>
+    <li><a href="?http_status=410">All archives</a></li>
+    <li role="presentation" class="divider"></li>
+    <li role="presentation" class="dropdown-header uppercase">Tagged</li>
+    <% tags.each do |tag| %>
+      <li><a href="?tagged=<%= tag %>"><%= tag %></a></li>
+    <% end %>
+    <li role="presentation" class="divider"></li>
+    <li><a href="#">Advanced filter</a></li>
+  </ul>
+</div>
+
+<!--
+<aside class="add-vertical-margins well">
+  <h3 class="remove-top-margin add-bottom-margin">Filter mappings</h3>
+  <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: '') do %>
+    <fieldset class="add-bottom-margin">
+      <legend class="legend-reset bold add-label-margin">By type</legend>
+      <%= label_tag nil, class: 'radio-inline' do %>
+        <%= radio_button_tag :http_status, 'all', selected: true %>
+        All
+      <% end %>
+      <% Mapping::TYPES.keys.each do |type| %>
+        <%= label_tag nil, class: 'radio-inline' do %>
+          <%= radio_button_tag :http_status, type %>
+          <%= http_status_name(type) %>
         <% end %>
-        <% if @path_contains.present? %>
-          <span class="add-left-margin">(<%= link_to 'Remove filter', site_mappings_path(@site) %>)</span>
-        <% end %>
-      </fieldset>
-      <%= label_tag :contains, 'Original path or new URL', class: 'rm' %>
-      <div class="input-group">
-        <%= text_field_tag :contains, @path_contains, class: 'form-control', placeholder: 'eg /home'  %>
-        <span class="input-group-btn">
-          <%= button_tag 'Filter', name: nil, class: 'btn btn-default ' %>
-        </span>
+      <% end %>
+    </fieldset>
+    <fieldset class="add-bottom-margin">
+      <legend class="legend-reset bold add-label-margin">By tag</legend>
+      <div class="row">
+        <div class="col-md-8">
+          <%= text_field_tag :tagged, params[:tagged], class: 'form-control js-tag-list' %>
+          <script>GOVUK.Tagging.ready({autocompleteWith: <%= most_used_tags_json(limit: 200) %>});</script>
+        </div>
       </div>
-    </div>
-  </div>
-<% end %>
+    </fieldset>
+    <fieldset class="add-bottom-margin">
+      <legend class="legend-inline bold">By </legend>
+      <% [['path', 'Original path'], ['new_url', 'New URL']].each do |field_name, label_text| %>
+        <%= label_tag nil, class: 'bold radio-inline add-label-margin' do %>
+          <%= radio_button_tag :filter_field, field_name, filter_box_selected?(params[:filter_field], field_name) %>
+          <%= label_text %>
+        <% end %>
+      <% end %>
+      <% if @path_contains.present? %>
+        <span class="add-left-margin">(<%= link_to 'Remove filter', site_mappings_path(@site) %>)</span>
+      <% end %>
+      <div class="row">
+        <div class="col-md-8">
+          <%= label_tag :contains, 'Original path or new URL', class: 'rm' %>
+          <%= text_field_tag :contains, params[:contains], class: 'form-control', placeholder: 'eg /home'  %>
+        </div>
+      </div>
+    </fieldset>
+    <%= button_tag 'Filter', name: nil, class: 'btn btn-default ' %>
+  <% end %>
+</aside>
+-->

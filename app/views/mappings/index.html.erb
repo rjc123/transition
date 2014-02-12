@@ -10,15 +10,14 @@
   </h1>
 </div>
 
-<%= render partial: 'filters' %>
-
-<h2>
+<h2 class="add-bottom-margin">
   <%= pluralize(number_with_delimiter(@mappings.total_count), 'mapping') %>
 </h2>
+
 <% if filtered_by_tags? %>
-  <section class="filtered-tags add-bottom-margin">
+  <section class="filtered-tags">
   <h3 class="rm">Tagged: </h3>
-    <ul class="tag-list">
+    <ul class="tag-list add-right-margin pull-left" style="font-size: 19px">
     <% filtered_by_tags.each do |tag| %>
       <li>
         <%= link_to remove_tag_from_filter_path(tag), class: 'tag', title: "Remove “#{tag}” tag filter" do %>
@@ -31,6 +30,30 @@
 <% end%>
 
 <% if @mappings.any? %>
+
+  <% tags = most_used_tags_for_site(@site, limit: 10) %>
+  <div class="btn-group pull-left add-right-margin add-bottom-margin">
+    <button type="button" class="btn btn-default">Filter</button>
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <span class="caret"></span>
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li role="presentation" class="dropdown-header uppercase">Type</li>
+      <li><a href="?">All</a></li>
+      <li><a href="?http_status=301">Redirects</a></li>
+      <li><a href="?http_status=410">Archives</a></li>
+      <li role="presentation" class="divider"></li>
+      <li role="presentation" class="dropdown-header uppercase">Tagged</li>
+      <% tags.each do |tag| %>
+        <li><a href="?tagged=<%= tag %>"><%= tag %></a></li>
+      <% end %>
+      <li role="presentation" class="divider"></li>
+      <li>
+        <a href="#"><span class="glyphicon glyphicon-search add-right-margin" style="font-size: 12px"></span>Search</a>
+      </li>
+    </ul>
+  </div>
 
   <%= paginate(@mappings) %>
 
