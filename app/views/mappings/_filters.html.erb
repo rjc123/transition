@@ -1,29 +1,8 @@
-<!-- Split button -->
-<% tags = most_used_tags_for_site(@site, limit: 10)%>
-<div class="btn-group">
-  <button type="button" class="btn btn-default">Filter</button>
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-    <li><a href="?">All mappings</a></li>
-    <li><a href="?http_status=301">All redirects</a></li>
-    <li><a href="?http_status=410">All archives</a></li>
-    <li role="presentation" class="divider"></li>
-    <li role="presentation" class="dropdown-header uppercase">Tagged</li>
-    <% tags.each do |tag| %>
-      <li><a href="?tagged=<%= tag %>"><%= tag %></a></li>
-    <% end %>
-    <li role="presentation" class="divider"></li>
-    <li><a href="#">Advanced filter</a></li>
-  </ul>
-</div>
-
-<!--
-<aside class="add-vertical-margins well">
-  <h3 class="remove-top-margin add-bottom-margin">Filter mappings</h3>
-  <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: '') do %>
+<aside class="add-vertical-margins panel panel-info">
+  <div class="panel-heading">
+    Filter mappings
+  </div>
+  <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'panel-body') do %>
     <fieldset class="add-bottom-margin">
       <legend class="legend-reset bold add-label-margin">By type</legend>
       <%= label_tag nil, class: 'radio-inline' do %>
@@ -64,7 +43,6 @@
         </div>
       </div>
     </fieldset>
-    <%= button_tag 'Filter', name: nil, class: 'btn btn-default ' %>
+    <%= button_tag 'Filter', name: nil, class: 'btn btn-info ' %>
   <% end %>
 </aside>
--->
