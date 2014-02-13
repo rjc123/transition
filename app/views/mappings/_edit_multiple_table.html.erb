@@ -1,23 +1,25 @@
-<table class="table table-bordered table-striped">
+<table class="table table-bordered">
   <thead>
     <tr class="table-header">
+      <th>Type</th>
       <th><%= pluralize(mappings.count, 'path') %> from <%= site.default_host.hostname %></th>
     </tr>
   </thead>
   <tbody>
     <% mappings.each do |m| %>
       <tr>
+        <td class="<%= "mapping-type-#{m.type}" %>">
+          <%= m.type.titleize %>
+        </td>
         <td>
           <strong><%= link_to m.path, m.old_url, class: 'breakable' %></strong>
-          <% unless modal %>
+          
             <span class="text-muted">
+              <br />
               <% if m.redirect? %>
-                currently redirects to <%= link_to m.new_url, m.new_url, class: 'link-muted breakable' %>
-              <% else %>
-                currently archived
+                Redirects to <%= link_to m.new_url, m.new_url, class: 'link-muted breakable' %>
               <% end %>
             </span>
-          <% end %>
           <%= hidden_field_tag "mapping_ids[]", m.id %>
         </td>
       </tr>

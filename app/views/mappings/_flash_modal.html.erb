@@ -1,0 +1,26 @@
+<% message ||= '20 mappings saved' %>
+<% mappings ||= @site.mappings.archives.first(20) %>
+<div id="flash-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h3 class="modal-title alert alert-success">
+            <span class="glyphicon glyphicon-ok text-success add-right-margin" style="font-size: 80%"></span> <%= message %>
+            <a href="#close" data-dismiss="modal" class="btn btn-success pull-right">OK</a>
+            <a href="#close" data-dismiss="modal" class="btn btn-default pull-right add-right-margin">Edit again</a>
+        </h3>
+      </header>
+      <div class="modal-body remove-bottom-padding">
+        <%= render partial: 'edit_multiple_table',
+                   locals: { modal: true,
+                             mappings: mappings,
+                             site: @site } %>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('#flash-modal').modal('show').on('hidden', function () {
+    $(this).remove();
+  });
+</script>

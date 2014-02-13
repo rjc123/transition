@@ -25,7 +25,7 @@ class MappingsController < ApplicationController
 
     bulk_add.create_or_update!
 
-    flash[:success] = bulk_add.success_message
+    flash[:success] = {message: bulk_add.success_message, mapping_ids: [bulk_add.outcomes.map{|m| m.id}]}
     redirect_to site_mappings_path(@site)
   end
 
@@ -61,8 +61,8 @@ class MappingsController < ApplicationController
     @mapping.attributes = params[:mapping]
 
     if @mapping.save
-      flash[:success] = 'Mapping saved'
-      redirect_to edit_site_mapping_path(@site, @mapping)
+      flash[:success] = {message: 'Mapping saved', mapping_ids: [@mapping.id]}
+      redirect_to site_mappings_path(@site)
     else
       render action: 'edit'
     end
@@ -96,7 +96,7 @@ class MappingsController < ApplicationController
       flash[:notice] = 'The following mappings could not be updated'
       render action: 'edit_multiple'
     else
-      flash[:success] = bulk_edit.success_message
+      flash[:success] = {message: bulk_edit.success_message, mapping_ids: [bulk_edit.mappings.map{|m| m.id}]}
       redirect_to bulk_edit.return_path
     end
   end

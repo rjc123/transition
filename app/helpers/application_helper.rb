@@ -28,4 +28,8 @@ module ApplicationHelper
     end
   end
 
+  def mappings_from_ids(ids)
+    @site.mappings.where(id: ids)
+  end
+
 end

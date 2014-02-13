@@ -48,13 +48,17 @@
     </div>
   </header>
   <section class="container">
-
     <main role="main">
+      <% #render partial: 'mappings/flash_modal' %>
       <% # Map bootstrap alerts to Rails flashes, but keep notice and alert as they are pecial cased with redirect_to %>
       <% [:success, :info, :warning, :danger, :notice, :alert].select { |k| flash[k].present? }.each do |k| %>
-        <div class="alert alert-<%= k == :notice || k == :alert ? 'warning' : k %>">
-          <%= flash[k] %>
-        </div>
+        <% if k == :success %>
+          <%= render partial: 'mappings/flash_modal', locals: { message: flash[k][:message], mappings: mappings_from_ids(flash[k][:mapping_ids]) } %>
+        <% else %>
+          <div class="alert alert-<%= k == :notice || k == :alert ? 'warning' : k %>">
+            <%= flash[k] %>
+          </div>
+        <% end %>
       <% end %>
 
       <% breadcrumbs do |links| %>

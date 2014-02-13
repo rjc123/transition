@@ -81,9 +81,9 @@ module View
           m.tag_list = [m.tag_list, params[:tag_list]].join(',')
 
           if m.new_record?
-            m.save ? :created : :creation_failed
+            m.save ? m : :creation_failed
           elsif update_existing?
-            m.save ? :updated : :update_failed
+            m.save ? m : :update_failed
           else
             :not_updating
           end
