@@ -97,7 +97,7 @@ class MappingsController < ApplicationController
       render action: 'edit_multiple'
     else
       flash[:success] = {message: bulk_edit.success_message, mapping_ids: [bulk_edit.mappings.map{|m| m.id}]}
-      redirect_to bulk_edit.return_path
+      redirect_to "#{bulk_edit.return_path}#mapping-#{bulk_edit.mappings.first.id}"
     end
   end
 

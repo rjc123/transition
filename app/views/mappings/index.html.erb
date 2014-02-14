@@ -2,6 +2,7 @@
 <% title = filtered_mappings ? 'Filtered mappings' : 'Mappings' %>
 <% content_for(:page_title, "#{title} | #{@site.default_host.hostname}") %>
 <% breadcrumb(filtered_mappings ? :filtered_mappings : :mappings, @site) %>
+<% saved_mappings = flash[:success] ? mappings_from_ids(flash[:success][:mapping_ids]) : false %>
 
 <div class="page-title-with-border">
   <h1>
@@ -58,7 +59,7 @@
     </thead>
     <tbody>
     <% @mappings.each do |mapping| %>
-      <tr data-status-code="<%= mapping.http_status %>">
+      <tr id="mapping-<%= mapping.id %>" data-status-code="<%= mapping.http_status %>">
         <% if current_user.can_edit?(@site.organisation) %>
           <td class="selectable-row">
             <div class="relative">
@@ -71,7 +72,7 @@
         <td class="<%= "mapping-type-#{mapping.type}" %>">
           <%= mapping.type.titleize %>
         </td>
-        <td class="mapping-path">
+        <td class="mapping-path" <% if saved_mappings && saved_mappings.include?(mapping) %>style="background: rgb(234, 251, 253)" class="info" <% end %>>
           <strong class="pull-left"><%= link_to mapping.path, mapping.old_url, class: 'breakable' %></strong>
           <%= render partial: 'tags', locals: { mapping: mapping } %>
           <% if mapping.redirect? %>
