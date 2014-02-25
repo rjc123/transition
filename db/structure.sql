@@ -110,12 +110,13 @@ CREATE TABLE `site_paths` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `path` varchar(2048) COLLATE utf8_bin DEFAULT NULL,
   `path_hash` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `c14n_path_hash` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `site_id` int(11) DEFAULT NULL,
   `mapping_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_site_paths_on_site_id_and_path_hash` (`site_id`,`path_hash`),
-  KEY `index_site_paths_on_mapping_id` (`mapping_id`),
-  KEY `index_site_paths_on_path_hash` (`path`(333))
+  KEY `index_site_paths_on_c14n_path_hash` (`c14n_path_hash`),
+  KEY `index_site_paths_on_mapping_id` (`mapping_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `sites` (

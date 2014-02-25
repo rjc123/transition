@@ -19,8 +19,8 @@ module Transition
                SUBSTRING_INDEX(GROUP_CONCAT(CAST(path AS CHAR)), ',', 1) # Simulate FIRST()
                AS path
         FROM   hits USE INDEX (index_hits_on_host_id_and_path_hash_and_hit_on_and_http_status)
-               INNER JOIN hosts ON hosts.id = hits.host_id
-               INNER JOIN sites ON sites.id = hosts.site_id
+               JOIN hosts ON hosts.id = hits.host_id
+               JOIN sites ON sites.id = hosts.site_id
         GROUP  BY hits.host_id,
                   hits.path_hash
       mySQL
