@@ -51,8 +51,9 @@ module Transition
             Digest::SHA1.hexdigest(site.canonical_path(site_path.path))
           mapping_id = Mapping.where(
             path_hash: c14nized_path_hash, site_id: site.id).pluck(:id).first
-          site_path.update_column(
-            :mapping_id, mapping_id) if mapping_id && (site_path.mapping_id != mapping_id)
+          site_path.update_columns(
+            mapping_id: mapping_id,
+            c14n_path_hash: c14nized_path_hash) if mapping_id && (site_path.mapping_id != mapping_id)
         end
 
         Rails.logger.info 'Updating hits from site paths...'

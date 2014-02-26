@@ -31,5 +31,12 @@ describe Transition::Import::HitsMappingsRelations do
     it 'has a SitePath per uncanonicalized hit (all of them!)' do
       SitePath.all.should have(3).site_paths
     end
+
+    describe 'The first SitePath' do
+      subject { SitePath.where(path: '/this/Exists?and=can&canonicalize=1').first }
+
+      its(:path_hash)      { should eql('9e6373ad29329874f9380e70ec5c1eb43f83de60') }
+      its(:c14n_path_hash) { should eql('f25624b703066ad7bc7019e985156f441afe7055') }
+    end
   end
 end
