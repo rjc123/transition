@@ -37,6 +37,7 @@ class Hit < ActiveRecord::Base
   scope :archives,   -> { where(http_status: '410') }
   scope :redirects,  -> { where(http_status: '301') }
   scope :top_ten,    -> { order('count DESC').limit(10) }
+  scope :top_five,   -> { order('count DESC').limit(5) }
 
   protected
   def set_path_hash

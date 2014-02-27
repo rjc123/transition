@@ -12,5 +12,16 @@
         redirected, seeing archives or finding errors.
       </p>
     <% end %>
+    <div class="list-group-item">
+      <%= link_to errors_site_hits_path(@site, period: 'last-seven-days'), class: 'list-group-item-heading' do %>
+        <h4 class="remove-top-margin">Missing mappings (404 errors)</h4>
+      <% end %>
+      <p class="list-group-item-text text-muted add-bottom-margin">
+        Pages on <%= @site.default_host.hostname %> that were visited in the last 7 days but have no associated mapping.<br />Fix these errors by adding mappings for the missing paths.
+      </p>
+      <div class="list-group-item-text remove-padding" style="margin: 0 -15px -40px">
+        <%= render partial: 'hits/hits_table_minimal', locals: { hits: @errors} %>
+      </div>
+    </div>
   </div>
 </div>

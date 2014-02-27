@@ -1,28 +1,21 @@
-<table class="hits table table-bordered">
+<table class="hits table table-hover" style="margin-top: -6px">
   <thead>
-  <tr class="table-header">
-    <th class="status" scope="col">HTTP<br/>Status</th>
-    <th scope="col">Path</th>
-    <th class="count" scope="col">Hits</th>
+  <tr>
+    <th scope="col" style="text-indent: 7px">Path</th>
+    <th class="count text-right" scope="col" style="width: 70px">Hits</th>
     <% if current_user.can_edit?(@site.organisation) %>
-      <th class="action" scope="col">Action</th>
+      <th class="action" scope="col" style="width: 50px"></th>
     <% end %>
   </tr>
   </thead>
   <tbody>
   <% max = hits.first.count %>
-
   <% hits.each do |hit| %>
     <tr>
-      <td class="status">
-        <abbr title="<%= "#{hit.http_status} — #{Rack::Utils::HTTP_STATUS_CODES[hit.http_status.to_i]}" %>">
-          <%= hit.http_status %>
-        </abbr>
-      </td>
       <td class="remove-padding">
         <div class="bar-chart-wrap">
           <%= render partial: 'hits/bar_chart_row', locals: { count: hit.count, max: max, status: hit.http_status } %>
-          <strong class="breakable path">
+          <strong class="breakable path" style="padding-left: 7px">
             <%= link_to_hit(hit, @site.default_host) %>
             <% if hit.mapping %>
               <% if [hit.http_status, hit.mapping.http_status] == ['410', '301']  %>
@@ -36,11 +29,12 @@
           </strong>
         </div>
       </td>
-      <td class="count"><%= number_with_delimiter hit.count %></td>
+      <td class="count text-right"><%= number_with_delimiter hit.count %></td>
       <% if current_user.can_edit?(@site.organisation) %>
-        <td class="action">
-          <%= link_to "#{hit.mapping.present? ? 'Edit' : 'Add'} mapping",
-                      site_mapping_find_path(@site, path: hit.path), class: 'btn btn-default btn-xs' %>
+        <td class="action text-center">
+          <%= link_to site_mapping_find_path(@site, path: hit.path), title: 'Add mapping', class: 'btn btn-default btn-xs' do %>
+            <span class="glyphicon glyphicon-plus"></span>
+          <% end %>
         </td>
       <% end %>
     </tr>
