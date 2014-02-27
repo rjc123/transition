@@ -25,6 +25,11 @@ class Site < ActiveRecord::Base
   def default_host
     hosts.first
   end
+  
+  def total_hits
+    count = self.default_host.hits.total_count.first.count
+    count ? count : 0
+  end
 
   def transition_status
     return :live          if hosts.any?(&:redirected_by_gds?)

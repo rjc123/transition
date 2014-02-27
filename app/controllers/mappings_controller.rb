@@ -37,7 +37,8 @@ class MappingsController < ApplicationController
         View::Mappings::canonical_filter(@site, params[:contains])
       end
 
-    @mappings = @site.mappings.order(:path).page(params[:page])
+    @mappings = @site.mappings
+
     @mappings = if params[:filter_field] == 'new_url'
       @mappings.redirects.filtered_by_new_url(@path_contains)
     else
@@ -47,6 +48,12 @@ class MappingsController < ApplicationController
     if params[:tagged].present?
       @mappings = @mappings.tagged_with(params[:tagged])
     end
+
+    @mappings.sort! {|a,b| b.total_hits <=> a.total_hits}
+    @mappings = Kaminari.paginate_array(@mappings).page(params[:page])
+
+    @site_hits = @site.total_hits
+
   end
 
   def edit

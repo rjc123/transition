@@ -17,6 +17,8 @@ class Mapping < ActiveRecord::Base
   has_paper_trail
 
   belongs_to :site
+  has_many :hits
+
   validates :site, presence: true
   validates :path,
             length: { maximum: 1024 },
@@ -46,6 +48,11 @@ class Mapping < ActiveRecord::Base
 
   def archive?
     http_status == '410'
+  end
+
+  def total_hits
+    count = self.hits.total_count.first.count
+    count ? count : 0
   end
 
   def type

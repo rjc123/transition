@@ -48,6 +48,7 @@
         <th scope="col">
           Original path from <%= @site.default_host.hostname %>
         </th>
+        <th>Hits</th>
         <% if current_user.can_edit?(@site.organisation) %>
           <th></th>
         <% end %>
@@ -78,6 +79,12 @@
             <br><span class="text-muted">redirects to</span>
             <%= link_to mapping.new_url, mapping.new_url, class: 'link-muted breakable' if mapping.new_url.present? %>
           <% end %>
+        </td>
+        <td>
+          <%= number_with_delimiter(mapping.total_hits) %><br />
+          <span class="text-muted">
+            <%= "#{number_with_precision((mapping.total_hits.to_f/@site_hits.to_f) * 100, precision: 2)}%" %>
+          </span>
         </td>
         <% if current_user.can_edit?(@site.organisation) %>
           <td class="text-right">
