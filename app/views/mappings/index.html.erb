@@ -30,6 +30,27 @@
 
   <%= paginate(@mappings) %>
 
+  <div id="edit-with-a-list" class="modal modal-saved-mappings" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <header class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3 class="modal-title">
+            Enter a list of paths or URLs
+          </h3>
+        </header>
+        <div class="modal-body remove-bottom-padding">
+          <form>
+            <textarea class="form-control" style="height: 200px"></textarea>
+          </form>
+        </div>
+        <footer class="modal-footer">
+          <%= button_tag 'Continue', class: 'btn btn-success' %>
+        </footer>
+      </div>
+    </div>
+  </div>
+
 <% else %>
   <% if current_user.can_edit?(@site.organisation) %>
     <div class="add-bottom-margin">
