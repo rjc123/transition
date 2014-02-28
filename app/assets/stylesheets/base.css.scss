@@ -471,6 +471,24 @@ a.tag:hover {
 }
 
 /* ==========================================================================
+   Nav
+   ========================================================================== */
+
+.nav > li > a {
+  padding: 5px 10px;
+}
+
+.nav-pill-text {
+  position: relative;
+  display: block;
+  padding: 5px 10px;
+}
+
+.nav-pill-text:first-child {
+  padding-left: 0;
+}
+
+/* ==========================================================================
    Forms
    ========================================================================== */
 
@@ -484,4 +502,18 @@ form .field_with_errors textarea {
 form .field_with_errors label {
   color: $state-danger-text;
   display: block;
+}
+
+.filters {
+  margin-bottom: $default-vertical-margin;
+  margin-top: -6px;
+}
+
+.filters .dropdown-menu {
+  left: 5px;
+}
+
+.dropdown-with-text-input .dropdown-menu {
+  width: 600px;
+  padding: 15px;
 }

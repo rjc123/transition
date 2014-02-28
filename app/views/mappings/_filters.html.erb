@@ -1,45 +1,67 @@
-<aside class="add-bottom-margin row">
+<aside class="filters row">
   <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'col-md-6') do %>
-    <fieldset class="add-bottom-margin hide">
-      <legend class="legend-inline bold">By </legend>
-      <% [['path', 'Original path'], ['new_url', 'New URL']].each do |field_name, label_text| %>
-        <%= label_tag nil, class: 'bold radio-inline add-label-margin' do %>
-          <%= radio_button_tag :filter_field, field_name, filter_box_selected?(params[:filter_field], field_name) %>
-          <%= label_text %>
-        <% end %>
-      <% end %>
-      <% if @path_contains.present? %>
-        <span class="add-left-margin">(<%= link_to 'Remove filter', site_mappings_path(@site) %>)</span>
-      <% end %>
-      <%= label_tag :contains, 'Original path or new URL', class: 'rm' %>
-      <div class="input-group">
-        <%= text_field_tag :contains, @path_contains, class: 'form-control', placeholder: 'eg /home'  %>
-        <span class="input-group-btn">
-          <%= button_tag 'Filter', name: nil, class: 'btn btn-default ' %>
-        </span>
-      </div>
-    </fieldset>
-    <ul class="list-inline">
-      <li>
+    <ul class="nav nav-pills list-inline">
+      <li class="nav-pill-text">
         <strong>Filter by</strong>
       </li>
-      <li>
-        <a href="#" class="inherit">
+      <li class="dropdown dropdown-with-text-input">
+        <a href="#filter" class="inherit" data-toggle="dropdown" role="button">
           Path <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
         </a>
+        <div class="dropdown-menu" role="menu">
+          <%= label_tag :contains, 'Path' %>
+          <div class="input-group">
+            <%= text_field_tag :contains, @path_contains, class: 'form-control', placeholder: 'eg /home'  %>
+            <span class="input-group-btn">
+              <%= button_tag 'Filter', name: nil, class: 'btn btn-default ' %>
+            </span>
+          </div>
+        </div>
       </li>
-      <li>
-        <a href="#" class="inherit">
+      <li class="dropdown dropdown-with-text-input">
+        <a href="#filter" class="inherit" data-toggle="dropdown" role="button">
           New URL <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
         </a>
+        <div class="dropdown-menu" role="menu">
+          <%= label_tag :contains, 'New URL' %>
+          <div class="input-group">
+            <%= text_field_tag :contains, @path_contains, class: 'form-control', placeholder: 'eg https://www.gov.uk'  %>
+            <span class="input-group-btn">
+              <%= button_tag 'Filter', name: nil, class: 'btn btn-default ' %>
+            </span>
+          </div>
+        </div>
       </li>
-      <li>
-        <a href="#" class="inherit">
+      <li class="dropdown">
+        <a href="#filter" class="inherit" data-toggle="dropdown" role="button">
+          Tag <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
+        </a>
+        <% tags = most_used_tags_for_site(@site, limit: 10) %>
+        <ul class="dropdown-menu" role="menu">
+          <% tags.each do |tag| %>
+            <li><a href="?tagged=<%= tag %>"><%= tag %></a></li>
+          <% end %>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#filter" class="inherit" data-toggle="dropdown" role="button">
           Type <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
         </a>
+        <ul class="dropdown-menu" role="menu">
+          <li>
+            <a href="#filter">Archive (200)</a>
+          </li>
+          <li>
+            <a href="#filter">Redirect (1,456)</a>
+          </li>
+        </ul>
       </li>
-      <li>Tag <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span></li>
-      <li class="text-muted">Sorted by path</li>
+      <li class="nav-pill-text text-muted">Sorted by path</li>
     </ul>
   <% end %>
 </aside>
+<script>
+  $('.dropdown-with-text-input .dropdown-menu').click(function (e) {
+    e.stopPropagation();
+  });
+</script>
