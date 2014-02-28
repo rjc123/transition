@@ -40,18 +40,30 @@ class MappingsController < ApplicationController
     @mappings = @site.mappings.order(:path).page(params[:page])
 
     if params[:http_status] == '301'
+      @filtered = true
+      @filtered_by_type = true
       @mappings = @mappings.redirects
     elsif (params[:http_status] == '410')
+      @filtered = true
+      @filtered_by_type = true
       @mappings = @mappings.archives
     end
 
-    @mappings = if params[:filter_field] == 'new_url'
-      @mappings.redirects.filtered_by_new_url(@path_contains)
-    else
-      @mappings.filtered_by_path(@path_contains)
+    if params[:contains].present?
+      @mappings = if params[:filter_field] == 'new_url'
+        @filtered_by_new_url = true
+        @filtered = true
+        @mappings.redirects.filtered_by_new_url(@path_contains)
+      else
+        @filtered_by_path = true
+        @filtered = true
+        @mappings.filtered_by_path(@path_contains)
+      end
     end
 
     if params[:tagged].present?
+      @filtered_by_tag = true
+      @filtered = true
       @mappings = @mappings.tagged_with(params[:tagged])
     end
   end

@@ -1,64 +1,152 @@
-<aside class="filters row">
-  <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'col-md-6') do %>
-    <ul class="nav nav-pills list-inline">
-      <li class="nav-pill-text">
-        <strong>Filter by</strong>
-      </li>
-      <li class="dropdown dropdown-with-text-input">
-        <a href="#filter" class="inherit" data-toggle="dropdown" role="button">
-          Path <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
+<%
+  filtered = @filtered
+  filtered_by_new_url = @filtered_by_new_url
+  filtered_by_path    = @filtered_by_path
+  filtered_by_tag     = @filtered_by_tag
+  filtered_by_type    = @filtered_by_type
+%>
+
+<aside class="filters row remove-bottom-margin add-top-margin" style="clear: both">
+
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-footer" style="background: transparent; border-top: none">
+      <% if filtered %>
+        <a href="?" class="pull-right inherit close-filter" style="margin-top: 5px">
+          <span class="glyphicon glyphicon-remove"></span>
         </a>
-        <div class="dropdown-menu" role="menu">
-          <%= label_tag :contains, 'Path' %>
-          <div class="input-group">
-            <%= text_field_tag :contains, @path_contains, class: 'form-control', placeholder: 'eg /home'  %>
-            <span class="input-group-btn">
-              <%= button_tag 'Filter', name: nil, class: 'btn btn-default ' %>
-            </span>
-          </div>
-        </div>
-      </li>
-      <li class="dropdown dropdown-with-text-input">
-        <a href="#filter" class="inherit" data-toggle="dropdown" role="button">
-          New URL <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
-        </a>
-        <div class="dropdown-menu" role="menu">
-          <%= label_tag :contains, 'New URL' %>
-          <div class="input-group">
-            <%= text_field_tag :contains, @path_contains, class: 'form-control', placeholder: 'eg https://www.gov.uk'  %>
-            <span class="input-group-btn">
-              <%= button_tag 'Filter', name: nil, class: 'btn btn-default ' %>
-            </span>
-          </div>
-        </div>
-      </li>
-      <li class="dropdown">
-        <a href="#filter" class="inherit" data-toggle="dropdown" role="button">
-          Tag <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
-        </a>
-        <% tags = most_used_tags_for_site(@site, limit: 10) %>
-        <ul class="dropdown-menu" role="menu">
-          <% tags.each do |tag| %>
-            <li><a href="?tagged=<%= tag %>"><%= tag %></a></li>
-          <% end %>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a href="#filter" class="inherit" data-toggle="dropdown" role="button">
-          Type <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
-        </a>
-        <ul class="dropdown-menu" role="menu">
+      <% end %>
+      <ul class="nav nav-pills list-inline">
+        <li class="nav-pill-text">
+          <strong>Filter by</strong>
+        </li>
+        <% if filtered_by_path %>
           <li>
-            <a href="#filter">Archive (200)</a>
+            <a href="?" class="inherit bold selected-filter">
+              <span class="glyphicon glyphicon-remove" style="font-size: 80%"></span> Path
+            </a>
           </li>
+        <% else %>
+          <li class="dropdown dropdown-with-text-input">
+            <a href="#filter" class="inherit <% if filtered_by_path %>bold<% end %>" data-toggle="dropdown" role="button">
+              Path <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
+            </a>
+            <div class="dropdown-menu" role="menu">
+              <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'form') do %>
+                <%= label_tag :contains, 'Path' %>
+                <div class="input-group">
+                  <%= text_field_tag :contains, @path_contains, class: 'form-control', placeholder: 'eg /home'  %>
+                  <span class="input-group-btn">
+                    <%= button_tag 'Filter', name: nil, class: 'btn btn-default ' %>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+        <% if filtered_by_new_url %>
           <li>
-            <a href="#filter">Redirect (1,456)</a>
+            <a href="?" class="inherit bold selected-filter">
+              <span class="glyphicon glyphicon-remove" style="font-size: 80%"></span> New URL
+            </a>
           </li>
-        </ul>
-      </li>
-      <li class="nav-pill-text text-muted">Sorted by path</li>
-    </ul>
-  <% end %>
+        <% else %>
+          <li class="dropdown dropdown-with-text-input">
+            <a href="#filter" class="inherit" data-toggle="dropdown" role="button">
+              New URL <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
+            </a>
+            <div class="dropdown-menu" role="menu">
+              <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'form') do %>
+                <%= hidden_field_tag 'filter_field', 'new_url' %>
+                <%= label_tag :contains, 'New URL' %>
+                <div class="input-group">
+                  <%= text_field_tag :contains, @path_contains, class: 'form-control', placeholder: 'eg https://www.gov.uk'  %>
+                  <span class="input-group-btn">
+                    <%= button_tag 'Filter', name: nil, class: 'btn btn-default ' %>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+        <li class="dropdown">
+          <a href="#filter" class="inherit <% if filtered_by_tag %>bold selected-filter<% end %>" data-toggle="dropdown" role="button">
+            Tag <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
+          </a>
+          <% tags = most_used_tags_for_site(@site, limit: 10) %>
+          <ul class="dropdown-menu" role="menu">
+            <% tags.each do |tag| %>
+              <li><a href="?tagged=<%= tag %>"><%= tag %></a></li>
+            <% end %>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#filter" class="inherit <% if filtered_by_type %>bold selected-filter<% end %>" data-toggle="dropdown" role="button">
+            <% if filtered_by_type %><%= http_status_name(params[:http_status]).pluralize %><% else %>Type<% end %> <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <% if filtered_by_type %>
+            <li>
+              <a href="?">All types</a>
+            </li>
+            <% end %>
+            <li>
+              <a href="?http_status=410">Archive (200)</a>
+            </li>
+            <li>
+              <a href="?http_status=301">Redirect (1,456)</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-pill-text text-muted">Sorted by path</li>
+      </ul>
+
+    <% if filtered %>
+      </div>
+      <% if filtered_by_path || filtered_by_new_url || filtered_by_tag %>
+      <div class="panel-body" style="border-top: 1px solid #ddd">
+        <% if filtered_by_path %>
+          <div class="active-filter">
+            <%= label_tag :contains, 'Path' %>
+            <div class="input-group">
+              <%= text_field_tag :contains, @path_contains, class: 'form-control'  %>
+              <span class="input-group-btn">
+                <%= button_tag 'Update path', name: nil, class: 'btn btn-default ' %>
+              </span>
+            </div>
+          </div>
+        <% end %>
+        <% if filtered_by_new_url %>
+          <div class="active-filter">
+            <%= label_tag :contains, 'New URL' %>
+            <div class="input-group">
+              <%= text_field_tag :contains, @path_contains, class: 'form-control'  %>
+              <span class="input-group-btn">
+                <%= button_tag 'Update URL', name: nil, class: 'btn btn-default ' %>
+              </span>
+            </div>
+          </div>
+        <% end %>
+        <% if filtered_by_tag %>
+        <div class="active-filter">
+          <label>Tagged</label>
+          <ul class="tag-list remove-bottom-margin">
+            <% filtered_by_tags.each do |tag| %>
+              <li>
+                <%= link_to remove_tag_from_filter_path(tag), class: 'tag', title: "Remove “#{tag}” tag filter" do %>
+                  <span class="glyphicon glyphicon-remove"></span> <%= tag %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <% end %>
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+
+  </div>
 </aside>
 <script>
   $('.dropdown-with-text-input .dropdown-menu').click(function (e) {

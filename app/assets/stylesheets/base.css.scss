@@ -413,6 +413,17 @@ $tag-padding-left-right: (5em/14);
   margin-bottom: $default-vertical-margin / 3;
 }
 
+.tag-type {
+  color: #999 !important;
+  border-color: #999;
+  text-transform: none;
+}
+
+.tag-type:hover {
+  background: #999 !important;
+  color: #fff !important;
+}
+
 .tag-active,
 a.tag:focus,
 a.tag:hover {
@@ -516,4 +527,23 @@ form .field_with_errors label {
 .dropdown-with-text-input .dropdown-menu {
   width: 600px;
   padding: 15px;
+}
+
+.filters a.inherit,
+a.close-filter {
+  color: $text-color !important;
+}
+
+.active-filter {
+  position: relative;
+  margin-bottom: $default-vertical-margin;
+}
+
+.active-filter:last-child {
+  margin-bottom: 0 !important;
+}
+
+.selected-filter {
+  background: #eee;
+  color: $text-color !important;
 }
