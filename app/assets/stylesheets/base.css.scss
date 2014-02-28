@@ -547,3 +547,17 @@ a.close-filter {
   background: #eee;
   color: $text-color !important;
 }
+
+.filters .nav .remove-selected-filter {
+  display: inline-block;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.filters .nav .remove-selected-filter + a {
+  display: inline-block;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 1px solid #ddd;
+  margin-left: -4px;
+}

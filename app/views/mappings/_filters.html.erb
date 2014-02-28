@@ -70,6 +70,11 @@
           </li>
         <% end %>
         <li class="dropdown">
+          <% if filtered_by_tag %>
+            <a href="#" class="inherit selected-filter remove-selected-filter">
+              <span class="glyphicon glyphicon-remove" style="font-size: 80%"></span>
+            </a>
+          <% end %>
           <a href="#filter" class="inherit <% if filtered_by_tag %>bold selected-filter<% end %>" data-toggle="dropdown" role="button">
             Tag <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
           </a>
@@ -81,6 +86,11 @@
           </ul>
         </li>
         <li class="dropdown">
+          <% if filtered_by_type %>
+            <a href="#" class="inherit selected-filter remove-selected-filter">
+              <span class="glyphicon glyphicon-remove" style="font-size: 80%"></span>
+            </a>
+          <% end %>
           <a href="#filter" class="inherit <% if filtered_by_type %>bold selected-filter<% end %>" data-toggle="dropdown" role="button">
             <% if filtered_by_type %><%= http_status_name(params[:http_status]).pluralize %><% else %>Type<% end %> <span class="glyphicon glyphicon-chevron-down" style="font-size: 80%"></span>
           </a>
