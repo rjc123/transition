@@ -8,6 +8,7 @@ en:
   time:
     formats:
       govuk_date: "%-I:%M%P, %-e %B %Y" # 1:15pm, 1 January 2013
+      govuk_date_short: "%-e %b %Y" # 1:15pm, 1 January 2013
   mappings:
     not_possible_to_edit_homepage_mapping: 'It’s not currently possible to edit the mapping for a site’s homepage.'
     bulk:

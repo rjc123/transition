@@ -34,6 +34,9 @@ class MappingsController < ApplicationController
 
     @mappings = @site.mappings.order(:path).page(params[:page])
 
+    #@mappings.sort! {|a,b| b.total_hits <=> a.total_hits}
+    #@mappings = Kaminari.paginate_array(@mappings).page(params[:page])
+
     if params[:type] == 'archive' && params[:new_url_contains].present?
       @incompatible_filter = true
     end

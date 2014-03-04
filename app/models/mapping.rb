@@ -52,6 +52,11 @@ class Mapping < ActiveRecord::Base
     TYPES[http_status] || 'unknown'
   end
 
+  def last_modified
+    version = self.versions.last
+    version ? version.created_at : nil
+  end
+
   ##
   # Reconstruct old URL based on path and default site hostname
   def old_url

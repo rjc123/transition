@@ -16,6 +16,9 @@
       <th scope="col">
         Original path from <%= site.default_host.hostname %>
       </th>
+      <th style="width: 115px">
+        Last modified
+      </th>
       <% if current_user.can_edit?(site.organisation) %>
         <th class="mapping-edit-column"></th>
       <% end %>
@@ -46,6 +49,9 @@
           <br><span class="text-muted">redirects to</span>
           <%= link_to mapping.new_url, mapping.new_url, class: 'link-muted breakable' if mapping.new_url.present? %>
         <% end %>
+      </td>
+      <td>
+        <%= I18n.l(mapping.last_modified, :format => :govuk_date_short) if mapping.last_modified %>
       </td>
       <% if current_user.can_edit?(site.organisation) %>
         <td class="text-right">
