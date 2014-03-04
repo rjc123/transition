@@ -3,9 +3,27 @@
     <%= filter_remove_option_link(@site, 'Path', :path_contains) %>
   <% else %>
     <%= filter_option_link(@site, 'Path') %>
-    <div class="dropdown-menu dropdown-text-input" role="dialog" id="filter-by-path">
-      <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'form') do %>
+    <div class="dropdown-menu dropdown-text-input" role="dialog" id="filter-by-path" data-module="toggle" style="padding-bottom: 0">
+      <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'add-bottom-margin form js-toggle-target') do %>
         <%= render partial: 'mappings/filter/by_path_field', locals: {single_filter_form: true, button_text: 'Filter'} %>
+        <a href="#filter-by-multiple" class="js-toggle">
+          Filter by multiple paths
+        </a>
+      <% end %>
+      <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'if-js-hide form js-toggle-target') do %>
+        <div class="form-group">
+          <label for="multiple_paths">
+            Enter a list of paths or old URLs
+            <p class="text-muted normal add-label-margin">eg paste a list from an email or spreadsheet. Only the mappings you list will be shown.</p>
+          </label>
+          <textarea class="form-control" id="multiple_paths" style="height: 350px"></textarea>
+        </div>
+        <div class="form-group remove-bottom-margin" style="background: #eee; padding: 15px; margin: 0 -15px -15px">
+          <button class="btn btn-default">Filter</button>
+          <a href="#filter-by-multiple" class="js-toggle add-left-margin">
+            Enter a single path
+          </a>
+        </div>
       <% end %>
     </div>
   <% end %>

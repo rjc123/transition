@@ -1,6 +1,6 @@
 <% single_filter_form ||= false %>
 <div class="form-group">
-  <%= label_tag :path_contains, 'Path' %>
+  <%= label_tag :path_contains, 'Old path or old URL' %>
   <% if single_filter_form %>
     <%= hidden_field_tag 'new_url_contains', @new_url_contains %>
     <%= hidden_field_tag 'tagged', params[:tagged] %>
