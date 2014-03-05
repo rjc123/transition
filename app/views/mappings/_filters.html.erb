@@ -1,3 +1,6 @@
+<% multiple_path_filter = true %>
+<% @filtered = true if multiple_path_filter %>
+
 <nav class="filters row" data-module="filters">
   <div class="col-md-8">
     <div class="panel panel-default">
@@ -11,7 +14,7 @@
           <li class="if-no-js-hide nav-pill-text">
             <strong>Filter by</strong>
           </li>
-          <%= render partial: 'mappings/filter/by_path_menu' %>
+          <%= render partial: 'mappings/filter/by_path_menu', locals: {multiple_path_filter: multiple_path_filter} %>
           <%= render partial: 'mappings/filter/by_new_url_menu' %>
           <%= render partial: 'mappings/filter/by_tag_menu' %>
           <%= render partial: 'mappings/filter/by_type_menu' %>
@@ -23,18 +26,21 @@
           </li>
         </ul>
       </header>
-      <% if @incompatible_filter %>
-        <div class="alert alert-warning">
-          Your archive filter has been removed. Filtering by new URL is only possible with redirects.
-        </div>
-      <% end %>
-      <% if @path_contains || @new_url_contains || filtered_by_tags? %>
+      <div class="alert alert-warning">
+        Some of the paths you listed couldn't be found. You might want to <a href="#dfkj">add them</a>.
+      </div>
+      <% if multiple_path_filter || @path_contains || @new_url_contains || filtered_by_tags? %>
         <div class="panel-body">
-          <% if @path_contains %>
-            <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'form active-filter') do %>
-              <%= render partial: 'mappings/filter/by_path_field', locals: {single_filter_form: true, button_text: 'Update path'} %>
-            <% end %>
+
+          <% if multiple_path_filter %>
+            <label for="multiple_paths2">
+              List of paths or old URLs
+              <p class="text-muted normal add-label-margin">Only the mappings listed are shown.</p>
+            </label>
+            <textarea class="form-control" id="multiple_paths2" style="height: 100px"><%= "/this/ok\n/this/that\n/this/what"%></textarea>
+            <button class="btn btn-default add-top-margin">Update paths</button>
           <% end %>
+
           <% if @new_url_contains %>
             <%= form_tag(site_mappings_path(@site), method: 'get', role: 'form', class: 'form active-filter') do %>
               <%= render partial: 'mappings/filter/by_new_url_field', locals: {single_filter_form: true, button_text: 'Update URL'} %>
