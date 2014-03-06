@@ -17,7 +17,9 @@
         Original path from <%= site.default_host.hostname %>
       </th>
       <% if current_user.can_edit?(site.organisation) %>
-        <th class="mapping-edit-column"></th>
+        <th colspan="2" class="mapping-edit-column text-right">
+          Ready
+        </th>
       <% end %>
     </tr>
     <% if current_user.can_edit?(site.organisation) %>
@@ -52,6 +54,9 @@
           <%= link_to edit_site_mapping_path(site, mapping, :return_path => request.fullpath), class: 'btn btn-default btn-xs' do %>
             Edit&nbsp;mapping
           <% end %>
+        </td>
+        <td>
+          <span class="glyphicon glyphicon-ok glyphicon-smaller-with-text text-success"></span>
         </td>
       <% end %>
     </tr>
