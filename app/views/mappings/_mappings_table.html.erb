@@ -38,7 +38,7 @@
       <% end %>
       <td class="<%= "mapping-type-#{mapping.type}" %>">
         <%= mapping.type.titleize %>
-        <% if mapping.type == 'archive' && (0..5).to_a.sample == 1%> <a href="#" class="glyphicon glyphicon-question-sign text-muted" style="margin-top: 2px; margin-left: 3px" data-toggle="tooltip" data-placement="right" title="Mapping archived by default during import"></a><% end %>
+        <% if mapping.type == 'archive' && (0..5).to_a.sample == 1%> <a href="#" class="glyphicon glyphicon-question-sign text-muted" data-toggle="tooltip" data-html="true" title="<strong style='font-size: 16px'>Accept this archive</strong><br/>Path was archived by default during import."></a><% end %>
       </td>
       <td class="mapping-path">
         <strong class="pull-left"><%= link_to mapping.path, mapping.old_url, class: 'breakable' %></strong>
