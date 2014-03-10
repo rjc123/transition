@@ -5,7 +5,7 @@
 }
 
 .mapping-type-column {
-  width: 70px;
+  width: 88px;
 }
 
 .mapping-edit-column {
@@ -35,4 +35,8 @@
 .read-only-fields dd {
   margin-left: 0;
   margin-bottom: $default-vertical-margin;
+}
+
+a.glyphicon-question-sign:hover {
+  text-decoration: none;
 }

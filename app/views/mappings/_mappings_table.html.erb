@@ -17,9 +17,7 @@
         Original path from <%= site.default_host.hostname %>
       </th>
       <% if current_user.can_edit?(site.organisation) %>
-        <th colspan="2" class="mapping-edit-column text-right">
-          Ready
-        </th>
+        <th></th>
       <% end %>
     </tr>
     <% if current_user.can_edit?(site.organisation) %>
@@ -40,6 +38,7 @@
       <% end %>
       <td class="<%= "mapping-type-#{mapping.type}" %>">
         <%= mapping.type.titleize %>
+        <% if mapping.type == 'archive' && (0..5).to_a.sample == 1%> <a href="#" class="glyphicon glyphicon-question-sign text-muted" style="margin-top: 2px; margin-left: 3px" data-toggle="tooltip" data-placement="right" title="Mapping archived by default during import"></a><% end %>
       </td>
       <td class="mapping-path">
         <strong class="pull-left"><%= link_to mapping.path, mapping.old_url, class: 'breakable' %></strong>
@@ -54,9 +53,6 @@
           <%= link_to edit_site_mapping_path(site, mapping, :return_path => request.fullpath), class: 'btn btn-default btn-xs' do %>
             Edit&nbsp;mapping
           <% end %>
-        </td>
-        <td>
-          <span class="glyphicon glyphicon-ok glyphicon-smaller-with-text text-success"></span>
         </td>
       <% end %>
     </tr>

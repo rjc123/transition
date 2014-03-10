@@ -21,5 +21,6 @@
 (function($, GOVUK) {
   $(function(){
     GOVUK.startAll();
+    $('[data-toggle="tooltip"]').tooltip();
   });
 })(jQuery, window.GOVUK);
