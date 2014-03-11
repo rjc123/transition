@@ -36,10 +36,13 @@
           </div>
         </td>
       <% end %>
-      <td class="<%= "mapping-type-#{mapping.type}" %>">
-        <%= mapping.type.titleize %>
-        <% if mapping.type == 'archive' && (0..5).to_a.sample == 1%> <a href="#" class="glyphicon glyphicon-question-sign text-muted" data-toggle="tooltip" data-html="true" title="<strong style='font-size: 16px'>Accept this archive</strong><br/>Path was archived by default during import."></a><% end %>
-      </td>
+      <% if mapping.type == 'redirect' || (mapping.type == 'archive' && (0..1).to_a.sample != 1) %>
+        <td class="<%= "mapping-type-#{mapping.type}" %>">
+          <%= mapping.type.titleize %>
+        </td>
+      <% else %>
+        <td title="Unresolved mapping"></td>
+      <% end %>
       <td class="mapping-path">
         <strong class="pull-left"><%= link_to mapping.path, mapping.old_url, class: 'breakable' %></strong>
         <%= render partial: 'tags', locals: { mapping: mapping } %>
