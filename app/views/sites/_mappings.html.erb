@@ -1,7 +1,8 @@
 <div class="mappings">
   <h3 class="remove-top-margin add-bottom-margin">Mappings</h3>
-  <div class="list-group add-big-bottom-margin">
-    <div class="list-group-item">
+
+  <div class="list-group add-bottom-margin">
+    <!-- <div class="list-group-item">
       <h4 class="list-group-item-heading">
         <%= link_to 'Mappings', site_mappings_path(@site), class: 'no-visit' %>
       </h4>
@@ -9,6 +10,38 @@
         <strong><%= pluralize(number_with_delimiter(@site.mappings.count), 'path') %></strong> &mdash;
         <%= site_redirects_link(@site) %> and <%= site_archives_link(@site) %>
       </p>
+    </div>-->
+    <div class="list-group-item">
+      <div class="row">
+        <div class="col-md-3" style="border-right: 1px solid #ddd">
+          <%= link_to site_mappings_path(@site), class: 'highlight highlight-small highlight-plain' do %>
+            <div class="big-number"><%= number_with_delimiter(@site.mappings.count) %></div>
+            <div>mappings</div><br />
+          <% end %>
+        </div>
+        <div class="col-md-3" style="border-right: 1px solid #ddd">
+          <%= link_to site_mappings_path(@site, type: 'redirect'), class: 'highlight highlight-small highlight-redirect' do %>
+            <div class="big-number"><%= number_with_delimiter(@site.mappings.redirects.count) %></div>
+            <div>redirects</div>
+            <div class="text-muted">70% of traffic</div>
+          <% end %>
+        </div>
+        <div class="col-md-3" style="border-right: 1px solid #ddd">
+          <%= link_to site_mappings_path(@site, type: 'archive'), class: 'highlight highlight-small highlight-archive' do %>
+            <div class="big-number"><%= number_with_delimiter(@site.mappings.archives.count) %></div>
+            <div>archives</div>
+            <div class="text-muted">20% of traffic</div>
+          <% end %>
+        </div>
+        <div class="col-md-3">
+          <%= link_to site_mappings_path(@site), class: 'highlight highlight-small highlight-error' do %>
+            <div class="big-number"><%= number_with_delimiter(@site.mappings.count) %></div>
+            <div>unresolved</div>
+            <div class="text-muted">10% of traffic</div>
+          <% end %>
+        </div>
+      </div>
+
     </div>
     <% if current_user.can_edit?(@site.organisation) %>
       <div class="list-group-item">

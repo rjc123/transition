@@ -177,7 +177,7 @@ main a {
   &:visited {
     color: $link-color-visited;
   }
-  
+
   &.no-visit:visited {
     color: $link-color;
   }
@@ -344,6 +344,10 @@ thead .table-header-secondary td {
   font-weight: bold;
 }
 
+.highlight-small .big-number {
+  font-size: $font-size-h1;
+}
+
 .list-group-item {
   padding-top:    $default-vertical-margin;
   padding-bottom: $default-vertical-margin;
@@ -397,6 +401,35 @@ a.list-group-item {
   border-radius: $border-radius-base;
 }
 
+.highlight-small {
+  font-size: $font-size-base;
+  padding: $default-vertical-margin;
+}
+
+a.highlight {
+  display: block;
+}
+
+a.highlight:visited {
+  color: $link-color;
+}
+
+a.highlight .big-number,
+a.highlight:visited .big-number {
+  color: inherit;
+}
+
+a.highlight:hover {
+  text-decoration: none;
+  background: #eee;
+}
+
+.highlight-plain {
+  color: $text-color;
+  background: none;
+  //border: 1px solid $table-border-color;
+}
+
 .highlight > p:last-child {
   margin-bottom: 0;
 }
@@ -407,6 +440,30 @@ a.list-group-item {
 
 .highlight-orange, .highlight-pre-transition {
   background-color: $orange;
+}
+
+.highlight-redirect {
+  //background-color: $good-HTTP-status-color;
+  background: none;
+  border-radius: 0;
+  color: $text-color;
+  //border-top: 10px solid $good-HTTP-status-color;
+}
+
+.highlight-archive {
+  //background-color: $default-HTTP-status-color;
+  background: none;
+  border-radius: 0;
+  color: $text-color;
+  //border-top: 10px solid $default-HTTP-status-color;
+}
+
+.highlight-error {
+  //background-color: $bad-HTTP-status-color;
+  background: none;
+  border-radius: 0;
+  color: $text-color;
+  //border-top: 10px solid $bad-HTTP-status-color;
 }
 
 /* Tags
