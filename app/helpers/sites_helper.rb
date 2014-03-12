@@ -35,6 +35,12 @@ module SitesHelper
       site_mappings_path(site, type: 'redirect'),
       class: 'link-muted'
   end
+  
+  def site_unresolved_link(site)
+    link_to number_with_delimiter((site.mappings.redirects.count * 0.2).to_i) + ' unresolved',
+      site_mappings_path(site, type: 'redirect'),
+      class: 'link-muted'
+  end
 
   def site_archives_link(site)
     link_to pluralize(number_with_delimiter(site.mappings.archives.count), 'archive'),

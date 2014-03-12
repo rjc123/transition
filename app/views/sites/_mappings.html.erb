@@ -2,16 +2,24 @@
   <h3 class="remove-top-margin add-bottom-margin">Mappings</h3>
 
   <div class="list-group add-bottom-margin">
-    <!-- <div class="list-group-item">
+    <div class="list-group-item">
       <h4 class="list-group-item-heading">
         <%= link_to 'Mappings', site_mappings_path(@site), class: 'no-visit' %>
       </h4>
       <p class="list-group-item-text text-muted">
         <strong><%= pluralize(number_with_delimiter(@site.mappings.count), 'path') %></strong> &mdash;
-        <%= site_redirects_link(@site) %> and <%= site_archives_link(@site) %>
+        <%= site_redirects_link(@site) %>, <%= site_archives_link(@site) %> and <%= site_unresolved_link(@site) %>
       </p>
-    </div>-->
+    </div>
     <div class="list-group-item">
+      <h4 class="list-group-item-heading">
+        <%= link_to 'Paths needing a decision', site_mappings_path(@site), class: 'no-visit' %>
+      </h4>
+      <p class="list-group-item-text text-muted">
+        <strong>200 paths</strong> are missing a mapping type, that’s about <strong>30% of site traffic</strong>.<br />(After transition mappings without a type will be archived by default).
+      </p>
+    </div>
+    <!-- <div class="list-group-item">
       <div class="row">
         <div class="col-md-3" style="border-right: 1px solid #ddd">
           <%= link_to site_mappings_path(@site), class: 'highlight highlight-small highlight-plain' do %>
@@ -42,7 +50,7 @@
         </div>
       </div>
 
-    </div>
+    </div> -->
     <% if current_user.can_edit?(@site.organisation) %>
       <div class="list-group-item">
         <h4 class="list-group-item-heading">
