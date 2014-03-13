@@ -8,7 +8,8 @@ class Mapping < ActiveRecord::Base
 
   TYPES = {
     '301' => 'redirect',
-    '410' => 'archive'
+    '410' => 'archive',
+    '418' => 'pending-content'
   }
 
   attr_accessible :path, :site, :http_status, :new_url, :suggested_url, :archive_url

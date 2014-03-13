@@ -1,0 +1,20 @@
+<%= hidden_field_tag "operation", operation %>
+<% if operation == '418' %>
+  <%= field_set_tag nil, class: 'form-group add-bottom-margin' do %>
+    <% if new_url_error %>
+      <p class="alert alert-danger">
+        <%= new_url_error %>
+      </p>
+    <% end %>
+    <div <% if new_url_error %>class="field_with_errors"<% end %> >
+      <% whitehall_label = capture do %>
+        Whitehall admin URL
+        <p class="text-muted normal add-label-margin">A link to the admin page for the as yet unpublished content.<br />When content goes live URLs will begin to redirect.</p>
+      <% end %>
+      <%= label_tag(:new_url, whitehall_label) %>
+    </div>
+    <div <% if new_url_error %>class="field_with_errors"<% end %> >
+      <%= text_field_tag(:new_url, new_url, class: 'form-control', placeholder: 'eg https://whitehall-admin.production.alphagov.co.uk/government/admin/news/307626') %>
+    </div>
+  <% end %>
+<% end %>

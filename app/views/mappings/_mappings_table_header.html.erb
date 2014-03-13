@@ -18,17 +18,21 @@
           <%= label_tag :operation_410, class: 'radio-inline table-header-radio add-right-margin' do %>
             <%= radio_button_tag(:operation, '410') %> Archive
           <% end %>
+          <%= label_tag :operation_418, class: 'radio-inline table-header-radio add-right-margin' do %>
+            <%= radio_button_tag(:operation, '418') %> Pending content
+          <% end %>
           <%= label_tag :operation_tag, class: 'radio-inline table-header-radio add-right-margin' do %>
             <%= radio_button_tag(:operation, 'tag') %> Tag
           <% end %>
           <%= submit_tag "Edit selected", class: 'btn btn-default bold' %>
         </div>
       <% end %>
-      <div class="if-no-js-hide btn-group">
+      <span class="if-no-js-hide btn-group">
         <a href="#redirect-paths" class="btn btn-default js-submit-form disabled" data-type="301" data-loading-text="Loading…" title="Redirect the paths you’ve selected to a new URL">Redirect</a>
         <a href="#archive-paths" class="btn btn-default js-submit-form disabled" data-type="410" data-loading-text="Loading…" title="Archive the paths you’ve selected">Archive</a>
-        <a href="#tag-paths" class="btn btn-default js-submit-form disabled" data-type="tag" data-loading-text="Loading…" title="Tag the paths you’ve selected">Tag</a>
-      </div>
+        <a href="#archive-paths" class="btn btn-default js-submit-form disabled" data-type="418" data-loading-text="Loading…" title="Mark the paths you’ve selected as pending published content">Assign pending content</a>
+      </span>
+      <a href="#tag-paths" class="add-left-margin btn btn-default js-submit-form disabled" data-type="tag" data-loading-text="Loading…" title="Tag the paths you’ve selected">Tag</a>
     </div>
     <% if include_bulk_add %>
       <div class="pull-right">

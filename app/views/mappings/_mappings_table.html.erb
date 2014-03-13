@@ -28,6 +28,13 @@
   </thead>
   <tbody>
   <% mappings.each do |mapping| %>
+
+    <%
+      if (0..5).to_a.sample == 1
+        mapping.http_status = '418'
+      end
+    %>
+
     <tr class="mapping-<%= mapping.id %>" data-status-code="<%= mapping.http_status %>">
       <% if current_user.can_edit?(site.organisation) %>
         <td class="selectable-row">
@@ -39,7 +46,7 @@
         </td>
       <% end %>
       <td class="<%= "mapping-type-#{mapping.type}" %>">
-        <%= mapping.type.titleize %>
+        <%= mapping.type.titleize.downcase.capitalize %>
       </td>
       <td class="mapping-path">
         <strong class="pull-left"><%= link_to mapping.path, mapping.old_url, class: 'breakable' %></strong>
@@ -47,6 +54,10 @@
         <% if mapping.redirect? %>
           <br><span class="text-muted">redirects to</span>
           <%= link_to mapping.new_url, mapping.new_url, class: 'link-muted breakable' if mapping.new_url.present? %>
+        <% end %>
+        <% if mapping.http_status == '418' %>
+          <br><span class="text-muted">redirect pending the publish of</span>
+          <a href="https://whitehall-admin.production.alphagov.co.uk/government/admin/news/307626" class="link-muted breakable" title="Whitehall admin URL">…/government/admin/news/307626</a>
         <% end %>
       </td>
       <% if current_user.can_edit?(site.organisation) %>

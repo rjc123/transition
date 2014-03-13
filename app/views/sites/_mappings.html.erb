@@ -7,7 +7,7 @@
       </h4>
       <p class="list-group-item-text text-muted">
         <strong><%= pluralize(number_with_delimiter(@site.mappings.count), 'path') %></strong> &mdash;
-        <%= site_redirects_link(@site) %> and <%= site_archives_link(@site) %>
+        <%= site_redirects_link(@site) %>, <%= site_archives_link(@site) %> and <a href="#pending" class="link-muted">15 pending content</a>
       </p>
     </div>
     <% if current_user.can_edit?(@site.organisation) %>
